@@ -1,0 +1,118 @@
+{% load compress %}
+{% load static %}
+
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- Tailwind CSS -->
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+
+    <!-- Font Awesome -->
+    <link href="{% static 'fontawsome/css/fontawesome.css' %}" rel="stylesheet">
+    <link href="{% static 'fontawsome/css/brands.css' %}" rel="stylesheet">
+    <link href="{% static 'fontawsome/css/solid.css' %}" rel="stylesheet">
+
+    {% block head %}{% endblock head %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="relative flex justify-between items-center px-8 top-0 left-0 border-b border-border-light">
+        {% block nav_logo %}
+        {% comment %} <a href="/" class="h-full"> <img src="{% static "images/logo-black.png" %}" alt="" class="max-h-full"> </a> {% endcomment %}
+        <a href="/" class="h-full text-center items-center flex"> Logo </a>
+
+        {% endblock nav_logo %}
+        <!-- Nav-links --> 
+        <ul class="nav-links">
+            {% if request.user.is_authenticated %}
+            {% comment %} <li><a href="/" class="nav-link"> Home </a></li> {% endcomment %}
+            <li><a href="/classes/" class="nav-link"> Classes </a></li>
+            <li><a href="/courses/" class="nav-link"> Courses </a></li>
+            <li><a href="/mcqs/" class="nav-link"> MCQs </a></li>
+            {% if request.user.is_superuser %}
+            <li> <a href="/admin/" class="nav-link" target="_blank"> Admin </a></li>
+            {% endif %}
+            
+            <li><a href="/accounts/logout/" class="nav-link"> Log Out </a></li>
+            
+            {% endif %}
+
+        </ul>
+    </nav>
+    
+    <!-- Hamburger menu for smaller devices -->
+    <a href="#" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </a>
+
+
+    <!-- <div class="main flex flex-col"> -->
+        
+        {% block main %} {% endblock main %}
+
+    <!-- </div>  -->
+
+
+    {% if messages %}
+    <ul class="messages absolute flex flex-col top-0 items-end w-full gap-1 p-2 z-20 overflow-hidden">
+        {% for message in messages %}
+        <li class="message flex rounded-md justify-between w-96 border border-l-2 text-slate-900 !bg-white z-20
+            {% if message.tags == 'error' %} border-l-red-400 text-red-400 
+            {% elif message.tags == 'info' %} border-l-blue-400 
+            {% elif message.tags == 'success' %} border-l-green-400 
+            {% endif %}
+        ">
+            <span class="message-text p-4 ">
+            {{ message }}
+            </span>
+            <button class="msg-destroy-btn !text-slate-500 p-4 hover:bg-slate-100"><i class="fa-solid fa-x"></i></button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</body>
+
+
+<script>
+    {% block script %}{% endblock script %}
+    
+    // Responsive Navbar
+    const hamburger = document.getElementsByClassName("hamburger")[0];
+    const navLinks = document.getElementsByClassName("nav-links");
+
+    hamburger.addEventListener('click', () => {
+        for (let i = 0; i < navLinks.length; i++) {
+            const element = navLinks[i];            
+            element.classList.toggle('active');
+        }
+    });
+
+    // Messages
+    const messages = document.getElementsByClassName("message");
+
+    for (let i = 0; i < messages.length; i++) { 
+        const message = messages[i];
+
+        let cutBtn = message.querySelector('.msg-destroy-btn')
+
+        cutBtn.onclick = () => {
+            message.style.display = "none";
+        }
+    }
+
+</script>
+
+
+</html>

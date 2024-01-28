@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+    --nav-height: 5rem; /* 70px */
+    --full-height: calc(100vh - var(--nav-height));
+
+    /* Colors */
+    --grey: #6F6F6F;
+}
+
+*{
+    margin: 0px; 
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color-body);
+
+    /* outline: 1px solid red; */
+}
+
+
+
+/*
+NAVBAR 
+*/
+nav{
+    height: var(--nav-height);
+}
+
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    gap: 0.5em;
+    z-index: 9;
+}
+
+.hamburger{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 30px;
+    height: 21px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 999;
+    
+}
+.hamburger span{
+    height: 3px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* 
+MAIN
+*/
+
+.main {
+    /* height: var(--full-height); */
+}
+
+
+@media (min-width: 1500px) {
+    html{
+        font-size: 18px;
+    }
+}
+
+
+/* Responsive Navigation Bar */
+@media (max-width: 1100px) {
+    html{ font-size: 14px; }
+    /* .main { padding: 0rem 2rem;} */
+
+    nav {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0px;
+    }
+    nav ul {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0px;
+        background-color: rgb(0, 60, 255);
+
+    }
+
+    .hamburger {
+        display: flex;
+    }
+    .nav-links{
+        display: none;
+        gap: 0px;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+    .nav-links li a{
+        padding: 1em;
+        border-radius: 0;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        color: rgb(19, 19, 22);
+        /* background-color: rgba(186, 202, 255, 0.5); */
+        background-color: rgba(255, 255, 255);
+        border-bottom: 1px solid rgb(224, 224, 224);
+    }
+
+    .nav-links.active {
+        display: flex;
+        background-color: var(--mid);
+        border-top: 1px solid var(--color-light);
+    }
+}
+
+
+@media (max-width: 500px) {
+    /* .main { padding: 0rem 1rem;} */
+}

@@ -1,0 +1,289 @@
+{% extends "_base.html" %}
+
+{% load custom_filters %}
+
+
+{% block head %}
+
+{% endblock head %}
+
+
+{% block main %}
+<style> 
+.main {
+    display: flex;
+    max-height: var(--full-height);
+}
+
+
+</style>
+<div class="main">
+
+    <!-- Side-bar -->
+    <div class="sticky flex flex-col gap-2 max-w-[20ch] p-4 bg-white border-r text-gray-700">
+        {% for cls in klasses %}
+            <a href="{% url "classes" klass_id=cls.id %}" id="{{cls.id}}" class="px-6 py-3 rounded-md text-center items-center flex justify-center hover:bg-blue-100 text-sm duration-300">{{cls.name}}</a>
+        {% endfor %}
+        <a href="{% url "create_class" %}" class="px-6 py-3 text-sm rounded-md hover:bg-blue-50 text-center items-center flex justify-center border-2 border-slate-200 border-dashed">&nbsp;<i class="fa-solid fa-plus fa-sm"></i> </a>
+    </div>
+
+    <!-- Main area -->
+    <div class="flex flex-col p-8 gap-8 overflow-y-auto w-full">
+        <input type="text" value="{{klass.name}}" id="klass-name" class="block max-w-[20ch] !text-3xl text-slate-700 border-none border-b p-0 outline-none focus:ring-0">
+        
+        <!-- Students -->
+        <div class="p-4 flex-grow flex-shrink-0 flex flex-col gap-4 rounded-lg border bg-white overflow-x-auto">
+            <h1 class="text-xl text-slate-700">Students</h1>
+
+            <div>
+                <div class="flex gap-2 mb-0 items-center">
+                    <span class="text-sm w-[20ch] text-slate-400">First Name</span>
+                    <span class="text-sm w-[20ch] text-slate-400">Last Name</span>
+                    <form method="post">
+                        {% csrf_token %}
+                        <span class="text-sm text-slate-400">Grades</span>
+                        <button name="add_column" class="px-2 ml-2 aspect-square text-slate-400 border rounded-md hover:bg-blue-100"> + </button>
+                    </form>
+                </div>
+                <div class="flex pl-[calc(40ch+1rem)] sm:text-sm sm:leading-6 gap-2 w-full">
+                    {% for grade in student_list.0.grades %}
+                    <form method="post" class="!min-w-[7ch]"> {% csrf_token %}
+                        <input type="number" name="index" value="{{forloop.counter0}}" hidden>
+                        <input type="number" name="klass_id" value="{{klass.id}}" hidden>
+                        <button name="removeGradeColumn" 
+                            class="py-1 h-full !min-w-[7ch] text-center px-3 text-slate-400  hover:text-red-600"> 
+                        <i class="fa-solid fa-xmark text-xs"></i>
+                    </button>
+                    </form>
+                    {% endfor %}
+                </div>
+                
+                {% for student in student_list %}
+                <div class="student flex gap-2 mb-2 items-center h-10" id="{{student.id}}">
+                    <!-- First Name -->
+                    <input type="text" value="{{student.first_name}}" class="regular-input h-full !w-[20ch]" onchange="updateStudent({{student.id}}, this.name, this.value)" name="fname" placeholder="First name" required>
+                    <!-- Last Name -->
+                    <input type="text" value="{{student.last_name}}" class="regular-input h-full !w-[20ch]" onchange="updateStudent({{student.id}}, this.name, this.value)" name="lname" placeholder="Last name" required>
+                    <!-- Student Grades List -->
+                    {% for grade in student.grades %}
+                    <input name="grade"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                        type = "number"
+                        maxlength = "5"
+                        onchange="updateStudentGrade({{student.id}}, {{forloop.counter0}}, this.value)" 
+                        value="{% if grade != None %}{{grade|floatformat:2}}{% endif %}" 
+                        class="regular-input h-full !w-[7ch] text-center uppercase"/>
+                    {% endfor %}
+
+                    <button onclick="deleteStudent({{student.id}})" class="text-xs h-full px-3 text-slate-400 rounded-md hover:text-red-600"> 
+                        <!-- <i class="fa-solid fa-trash"></i> \ -->
+                        <!-- <i class="fa-solid fa-minus"></i> -->
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Add student -->
+            <div> 
+                <p class="text-slate-400 pt-4 pb-2">Add a new student</p>
+                <form class="flex gap-2 items-center h-10" method="post">
+                    {% csrf_token %}
+                    <input type="text" value="{{student.first_name}}" class="regular-input h-full !w-[20ch]" name="fname" placeholder="First name" required>
+                    <input type="text" value="{{student.last_name}}" class="regular-input h-full !w-[20ch]" name="lname" placeholder="Last name" required>
+                    <input type="text" value="{{klass.id}}" name="klass_id" hidden>
+                    <button class="btn-secondary" name="add_student">Add</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="p-4 rounded-lg border bg-white">
+            <h1 class="text-xl mb-4 text-slate-700">Dashboard</h1>
+            <div class="flex flex-col items-start gap-4">
+                <div class="flex flex-wrap w-full gap-2">
+                    <div class="inline-block py-2 w-64 px-8 rounded-lg border">
+                        <span class="text-slate-400">Average Grade</span>
+                        <h1 class="text-3xl text-center my-4">{{student_list|get_average_grade|floatformat:2}}</h1>
+                    </div>
+                    {% comment %} <div class="inline-block py-2 w-64 px-8 rounded-lg border">
+                        <span class="text-slate-400">MCQ Completion Rate</span>
+                        <h1 class="text-3xl text-center my-4">98%</h1>
+                    </div> {% endcomment %}
+                </div>
+
+                {% comment %} <div class="h-full w-full">
+                    <span class="text-slate-400">Grade Distribution</span>
+                    <canvas id="myChart" class="" style="width:100%;max-width:700px"></canvas>
+                </div> {% endcomment %}
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script> 
+
+let baseUrl = window.location.protocol + '//' + window.location.host;
+
+var timer;
+function onInput(event) {
+    clearTimeout(timer);
+    timer = setTimeout(updateKlassName.bind(this, event), 500);
+}
+
+const klassName = document.getElementById("klass-name");
+klassName.addEventListener('input', onInput, false);
+
+let klassId = {{klass.id}};
+
+function updateKlassName() {
+    const name = document.getElementById('klass-name').value;
+
+    const postData = {
+        id: klassId,
+        name: name,
+    };
+
+    // Replace 'http://localhost:8000' with your Django development server or production server URL
+    fetch(`${baseUrl}/update_klass/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // Change text on the button
+        button = document.getElementById(data.id);
+        button.innerHTML = data.name;
+    })
+    .catch(error => { console.error('Error:', error);} );
+
+}
+
+function updateStudent(student_id, name, new_value) {
+    const postData = {
+        student_id: student_id,
+        name: name,
+        new_value: new_value,
+    };
+
+    fetch(`${baseUrl}/update_student/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+    })
+    // .then(response => response.json())
+    // .then(data => {})
+    // .catch(error => { console.error('Error:', error);} );
+}
+
+function updateStudentGrade(student_id, index, new_value){
+    const postData = {
+        student_id: student_id,
+        index: parseInt(index),
+        new_value: new_value,
+    };
+
+    fetch(`${baseUrl}/update_student_grade/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("success !");
+    })
+    .catch(error => { console.error('Error:', error);} );
+}
+
+function deleteStudent(studentId) {
+    const postData = {
+        student_id: studentId,
+    };
+
+    // Replace 'http://localhost:8000' with your Django development server or production server URL
+    fetch(`${baseUrl}/delete_student/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        studentDiv = document.getElementById(studentId);
+        studentDiv.remove();
+        console.log("Deleted !");
+    })
+    .catch(error => { console.error('Error:', error);} );
+}
+
+function removeGradeColumn(index){
+    const postData = {
+        index: parseInt(index),
+        klass_id: klassId,
+    };
+
+    fetch(`${baseUrl}/remove_grade_column/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("success !");
+    })
+    .catch(error => { console.error('Error:', error);} );
+}
+
+</script>
+
+
+{% comment %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+{% endcomment %}
+</script>
+<script>
+// Chart
+
+let frenchGrades = [];
+
+for (let i = 0; i <= 80; i++) {
+    frenchGrades.push((i * 0.25).toFixed(2));
+}
+
+console.log(frenchGrades)
+
+const xValues = frenchGrades;
+const yValues = [15, 8, 10, 3];
+const barColors = ["#2563eb", "#2563eb","#2563eb","#2563eb"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {}
+});
+
+
+</script>
+
+
+{% endblock main %}

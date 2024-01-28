@@ -1,0 +1,71 @@
+{% extends "_base.html" %}
+
+
+{% block head %}
+
+{% endblock head %}
+
+
+{% block main %}
+<div class="main  flex justify-center py-8">
+    <form method="post" class="">
+        {% csrf_token %}
+        <h1 class="text-2xl text-slate-700 font-semibold">Create a new class</h1>
+        
+        <div class="pt-6">
+            <label for="email" class="block text-sm font-medium leading-6 text-slate-700">Class Name</label>
+            <div class="mt-1">
+                {% comment %} <input type="text" class="regular-input" name="class-name" required> {% endcomment %}
+                {{form.name}}
+            </div>
+        </div>
+
+        <div class="pt-6">
+            <label for="email" class="block text-sm font-medium leading-6 text-slate-700">Class Level</label>
+            <div class="mt-1">
+                {% comment %} <input type="number" class="regular-input" name="class-name" required> {% endcomment %}
+                {{form.level}}
+            </div>
+        </div>
+
+        <h1 class="text-xl text-slate-700 font-semibold pt-6 ">Composition</h1>
+        <p class="text-slate-400">Add all the students of this class</p>
+        
+        <div id="composition" class="b-50 pt-3">
+            <div class="flex gap-2 mb-2">
+                <div class="mt-1">
+                    <input type="text" class="regular-input !w-[20ch]" name="fname" placeholder="First name" required>
+                </div>
+                <div class="mt-1">
+                    <input type="text" class="regular-input !w-[20ch]" name="lname" placeholder="Last name" required>
+                </div>
+            </div>
+
+        </div>
+
+        <button type="button" class="flex w-full p-1.5 text-sm text-center justify-center border-2 border-dashed border-slate-300 rounded-md text-slate-700 hover:bg-blue-50" onclick="add_student()">+</button>
+
+        <div class="flex justify-end mt-6">
+            <button type="submit" class="btn-primary">Create</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    composition = document.getElementById("composition")
+    function add_student() {
+        composition.insertAdjacentHTML('beforeend',
+        `
+        <div class="flex gap-2 my-2">
+            <div class="mt-1">
+                <input type="text" class="regular-input !w-[20ch]" name="fname" placeholder="First name" required>
+            </div>
+            <div class="mt-1">
+                <input type="text" class="regular-input !w-[20ch]" name="lname" placeholder="Last name" required>
+            </div>
+        </div>`
+        );
+    }
+
+</script>
+{% endblock main %}

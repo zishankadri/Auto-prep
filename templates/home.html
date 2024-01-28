@@ -1,0 +1,223 @@
+{% load compress %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    
+    <!-- Tailwind CSS -->
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+
+    <!-- Font Awesome -->
+    <link href="{% static 'fontawsome/css/fontawesome.css' %}" rel="stylesheet">
+    <link href="{% static 'fontawsome/css/brands.css' %}" rel="stylesheet">
+    <link href="{% static 'fontawsome/css/solid.css' %}" rel="stylesheet">
+
+    {% block head %}{% endblock head %}
+</head>
+
+<body class="font-poppins bg-[#171625] text-white">
+
+    <div class="main flex flex-col max-w-[1400px] mx-auto">
+
+        <!-- Home -->
+        <div class="flex flex-col h-[100vh]">
+            <!-- Navigation Bar -->
+            <nav class="flex justify-between px-8 sm:px-32 py-4 sm:py-8">
+                <img src="{% static "images/logo.png" %}" class="max-h-10" alt="Logo">
+                <!-- <a href="/" class="h-full text-center items-center flex text-blue-600"> Logo </a> -->
+
+                <!-- Nav-links --> 
+                <ul class="flex gap-4">
+
+                    {% if  request.user.is_anonymous %}
+                    {% comment %} <li><a href="/" class="nav-link"> Home </a></li> {% endcomment %}
+                    <li><a href="/accounts/login/" class="btn-primary"> Log In </a></li>
+                    {% comment %} <li><a href="/accounts/register/" class="btn-primary"> Sign Up </a></li> {% endcomment %}
+
+                    {% elif  request.user.is_authenticated %}
+                    <li><a href="/classes/" class="nav-link"> Classes </a></li>
+                    <li><a href="/courses/" class="nav-link"> Courses </a></li>
+                    <li><a href="/mcqs/" class="nav-link"> MCQs </a></li>
+
+                    {% endif %}
+
+                    {% if request.user.is_superuser %}
+                    <li> <a href="/admin/" class="nav-link" target="_blank"> Admin </a></li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+            <!-- Hamburger menu for smaller devices -->
+            <a href="#" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+
+            <div class="flex px-4 sm:px-32 flex-1 gap-32 items-center">
+                <img src="{% static "images/home.svg" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl">
+                <div class="flex flex-col gap-8 items-start">
+                    <h1 
+                    {% comment %} class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 font-handlee" {% endcomment %}
+                    class="text-6xl font-extrabold text-slate-200 font-pangolin"
+                    > 
+                    Empower Your Classroom.
+                    </h1>
+
+                    <p class="text-slate-300">
+                        AI-Enhanced Assessments, and Comprehensive Access to Course Materials for an Elevated Learning Experience.
+                    </p>
+                    <!-- <a href="/accounts/register/" class="btn-home border-t !border-blue-400">Try For Free</a> -->
+                    <div class="flex gap-8">
+                        <a href="/accounts/register/" class="btn-home border-t !border-blue-400">Try For Free</a>
+                        {% comment %} <img src="{% static "./images/arrow.png" %}" alt="" class="relative top-4 h-8"> {% endcomment %}
+                        <img src="{% static "./images/arrow1.png" %}" alt="" class="relative top-4 h-8">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--    Section B    -->
+        <div class="home-container gap-16">
+
+            <div class="flex flex-col gap-8 items-start">
+                <h1 class="text-4xl font-semibold "> 
+                    Automatic creation of unique multiple-choice tests
+                </h1>
+                <p class="text-slate-400">This feature generates unique multiple-choice tests for each student automatically, eliminating the need for manual correction.</p>
+            </div>
+
+            <img src="{% static "images/section-b.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl border border-slate-800">
+
+        </div>
+
+        <!--    Section C    -->
+        <div class="home-container  gap-16">
+            <img src="{% static "images/section-c.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl border border-slate-800">
+            
+            <div class="flex flex-col gap-8 items-start">
+                <h1 class="text-4xl font-semibold "> 
+                    Automatic MCQ correction by Artificial Intelligence.
+                </h1>
+                <p class="text-slate-400">The site handles the correction of each multiple-choice test.</p>
+            </div>
+
+        </div>
+
+        <!--    Section D    -->
+        <div class="home-container  gap-16">
+
+            <div class="flex flex-col gap-8 items-start">
+                <h1 class="text-4xl font-semibold"> 
+                    Access to each course in the program
+                </h1>
+                <p class="text-slate-400">Three types of courses are downloadable:</p>
+                <ul class="flex flex-col gap-4">
+                    <li class="flex items-center gap-4 text-late-200">
+                        <span class="flex justify-center text-xl items-center p-4 w-12 h-12 bg-blue-200 text-blue-600 rounded-full">1</span>
+                        Pedagogical support for the teacher.
+                    </li>
+                    <li class="flex items-center gap-4 text-late-200">
+                        <span class="flex justify-center text-xl items-center p-4 w-12 h-12 bg-blue-200 text-blue-600 rounded-full">2</span>
+                        Pedagogical support to be distributed to students.
+                    </li>
+                    
+                    <li class="flex items-center gap-4 text-00">
+                        <span class="flex justify-center text-xl items-center p-4 w-12 h-12 bg-blue-200 text-blue-600 rounded-full">3</span>
+                        Pedagogical support for students to complete.
+                    </li>
+                </ul>
+            </div>
+
+            <img src="{% static "images/placeholder.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl">
+        </div>
+    
+
+        <!--    Section E    -->
+        <div class="flex flex-col gap-16 py-8 sm:py-16 items-center w-full ">
+            <h1 class="text-4xl font-semibold"> Frequently Asked Questions </h1>
+
+            <div class="w-full flex flex-col justify-center lg:max-w-[80ch] border-t border-slate-200/10">
+                {% for faq in faq_list %}
+                <div 
+                class="question group border-b border-slate-200/10 p-8"
+                >
+                    <div class="top-bar flex justify-between items-center">
+                        <span class="text-xl font-medium group-hover:text-blue-600">
+                            {{faq.question}}
+                        </span>
+                        <i class="arrow fa-solid fa-chevron-down"></i>
+                    </div>
+
+                    <p class="answer hidden text-slate-400">
+                        {{faq.answer}}
+                    </p>
+
+                </div>
+                {% endfor %}
+            </div> <!-- FAQ container  -->
+        </div> <!-- FAQs Section -->
+
+
+    </div>
+
+</body>
+
+
+<script>
+
+const faqs = document.getElementsByClassName("question");
+
+for (let i = 0; i < faqs.length; i++) { 
+    const question = faqs[i];
+
+    let arrow = question.querySelector('.arrow')
+    let topBar = question.querySelector('.top-bar')
+    let p = question.querySelector('p')
+
+    function toggle(event) {
+        if (p.style.display == "block") {  
+            p.style.display = "none";
+            arrow.style.transform = "rotate(0deg)";
+            topBar.style.padding = "0";
+        } 
+        else { 
+            p.style.display = "block"; 
+            arrow.style.transform = "rotate(-180deg)";
+            topBar.style.padding = "0 0 1rem 0";
+
+        }
+    }
+    
+    // btn.addEventListener('click', toggle);
+    question.addEventListener('click', toggle);
+}
+
+
+</script>
+
+<script>
+    
+    // Responsive Navbar
+    const hamburger = document.getElementsByClassName("hamburger")[0];
+    const navLinks = document.getElementsByClassName("nav-links");
+
+    hamburger.addEventListener('click', () => {
+        for (let i = 0; i < navLinks.length; i++) {
+            const element = navLinks[i];            
+            element.classList.toggle('active');
+        }
+    });
+
+</script>
+
+
+</html>

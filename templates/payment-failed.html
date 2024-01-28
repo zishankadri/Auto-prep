@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block link %}
+    {% load static %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/performance/performance.css' %}"> {% endcomment %}
+{% endblock link %}
+
+{% block body %}
+<style> 
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark);
+    height: calc(100vh - 4rem);
+}
+.container {
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    color: white;
+    background-color: var(--mid);
+    padding: 2rem 4rem;
+    border-radius: 12px;
+}
+.headline {
+    color: red;
+    font-size: 2.5rem;
+    font-weight: 100;
+
+}
+</style>
+    <div class="main">
+        <div class="container">
+            <h1 class="headline"> Transaction Failed!</h1>
+            <p> YOUR PAYMENT WAS FAILD </p>
+            <a href="/pricing/" class="my-btn"> Go to Pricing</a>
+        </div>
+    <div>
+{% endblock body %}

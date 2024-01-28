@@ -1,0 +1,73 @@
+/* static/src/input.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
+
+.regular-input {
+    @apply rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+}
+
+.btn-primary {
+    @apply text-white bg-brand font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-brand-hover;
+    /* @apply text-white bg-blue-700 font-medium rounded-lg text-sm px-6 py-3 hover:bg-blue-800; */
+}
+.btn-primary:disabled {
+    @apply text-white font-medium rounded-lg text-sm px-5 py-2.5 !bg-brand opacity-50 cursor-not-allowed;
+    /* @apply text-gray-200 bg-gray-500 font-medium rounded-lg text-sm px-5 py-2.5; */
+}
+
+.btn-secondary {
+    @apply text-brand border border-brand font-medium rounded-lg text-sm px-5 py-2.5 hover:text-white hover:bg-brand;
+}
+
+.mycontainer {
+    @apply px-8 lg:px-16 py-4 lg:py-8;
+}
+
+.nav-link {
+    @apply px-5 py-2.5 rounded-md hover:bg-blue-100 text-slate-500 transition-all duration-200 ease-in-out;
+}
+
+.fancy-headline {
+    @apply before:w-2/4 before:h-[1px] before:bg-brand before:absolute before:bottom-0 before:left-0;
+    @apply before:transition-all before:duration-300 before:ease-in-out hover:before:translate-x-full;
+    @apply group-hover/container:before:translate-x-full;
+}
+  
+
+/* MCQs */
+
+.question-input {
+    @apply w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6;
+}
+.ans-input {
+    @apply w-full border-0 border-b border-gray-300 !outline-none focus:ring-0 text-sm leading-6 placeholder:text-gray-400
+}
+.question-option {
+    @apply flex items-center gap-2 text-sm
+}
+
+
+/* Specific for Home page */
+.home-container {
+    @apply px-4 sm:px-32 py-8 sm:py-24 flex flex-col lg:flex-row
+}
+
+.btn-home {
+    @apply text-white bg-gradient-to-r from-purple-400 to-blue-400 font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-brand;
+    @apply hover:shadow-lg hover:shadow-black 
+}
