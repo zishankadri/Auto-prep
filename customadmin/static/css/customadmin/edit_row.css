@@ -1,0 +1,63 @@
+
+form {
+    display: flex; flex-direction: column;
+    gap: var(--gap-primary);
+}
+
+.headline {
+    font-weight: 400;
+}
+
+.fields {
+    display: flex; flex-direction: column;
+}
+
+.fields p {
+    border-bottom: 1px solid var(--mid);
+    padding: 1em;
+
+}
+
+.fields label {
+    color: var(--text-color-secondary);
+    margin-right: 2em;
+}
+
+
+
+/* Actions Bar */
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    /* background-color: var(--mid); */
+    border: 1px solid var(--mid);
+    border-radius: var(--radius-secondary);
+    border-radius: 4px;
+    padding: 0.6em;
+}
+
+.action-bar button {
+    color: var(--mid);
+}
+.action-bar button:hover {
+    color: var(--mid);
+
+}
+
+.filter-wrapper {
+    border: 1px solid var(--mid);
+    border-radius: 4px;
+    padding: 0.6em;
+    color: var(--text-color-secondary);
+
+    & span { margin-right: 1rem; }
+    & p { border: none ; }
+
+}
+
+.filter {
+    display: flex;
+    gap: 1em;
+    padding: 0.6em;
+    align-items: center;
+}

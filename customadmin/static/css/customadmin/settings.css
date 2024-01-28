@@ -1,0 +1,32 @@
+
+.container {
+    /* box-shadow: none; */
+    /* gap: 1em; */
+}
+
+.cron-container {
+}
+
+.cron-form {
+    display: flex;
+    justify-content: space-between;
+    /* background-color: red !important; */
+}
+.cron-paused-text {
+    font-size: 1rem;
+    margin-left: 0.5em;
+    color: var(--red);
+    opacity: 0.8;
+}
+
+
+
+.cron-form input[type=number] {
+    width: 2.5rem;
+    background-color: var(--light);
+}
+
+input {
+    width: 100%;
+    font-size: 1rem;
+}

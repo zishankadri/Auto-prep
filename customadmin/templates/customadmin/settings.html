@@ -1,0 +1,43 @@
+{% extends 'customadmin/base.html' %}
+
+<!-- Custom Filters -->
+{% load filters %}
+
+
+{% block link %}
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'css/customadmin/settings.css' %}">
+
+{% endblock link %}
+
+
+{% block body %}
+    <h2>Settings</h2>
+
+    <!-- Pricing  -->
+    <form method="post" class="container gap-2">
+        {% csrf_token %}
+
+        <h3>Monthly Price</h3>
+        <div class="flex-column gap-05">
+            <div class="flex align-center gap-2">
+                <p>Price</p>
+                <input type="number" name="price1" value="{{price1}}" >
+                <button name="set_pricing1" class="save-btn abstract-btn">Save</button>
+            </div>
+        </div>
+
+        <h3>Yearly Price</h3>
+        <div class="flex-column gap-05">
+            <div class="flex align-center gap-2">
+                <p>Price</p>
+                <input type="number" name="price2" value="{{price2}}">
+                <button name="set_pricing2" class="save-btn abstract-btn">Save</button>
+            </div>
+        </div>
+    </form>
+
+
+{% endblock body %}
+

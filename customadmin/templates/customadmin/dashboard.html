@@ -1,0 +1,40 @@
+{% extends 'customadmin/base.html' %}
+
+{% block link %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/customadmin/codemirror.css' %}">
+    <link rel="stylesheet" href="{% static 'css/customadmin/dashboard.css' %}">
+
+{% endblock link %}
+
+<!-- Custom Filters -->
+{% load filters %}
+
+{% block body %}
+    <h2>Dashboard</h2>
+    
+    <div class="card-container">
+
+        <div class="card">
+            <p>Customers</p>
+            <h1>{{customers}}</h1>
+        </div>
+
+        {% comment %} <div class="card">
+            <p>Todays Visits</p>
+            <h1>{{visits}}</h1>
+        </div> {% endcomment %}
+
+        <div class="card">
+            <p>Revenue</p>
+            <h1>{{0|currency}}</h1>
+            {% comment %} <p class="card-text-bottum"> {% endcomment %}
+                {% comment %} <span class="text-success"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span> {% endcomment %}
+                {% comment %} <span>Since last month</span> {% endcomment %}
+            {% comment %} </p> {% endcomment %}
+        </div>
+
+    </div>
+
+{% endblock body %}
