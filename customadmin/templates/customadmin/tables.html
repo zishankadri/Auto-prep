@@ -1,0 +1,55 @@
+{% extends 'customadmin/base.html' %}
+
+<!-- Custom Filters -->
+{% load filters %}
+
+{% block link %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/customadmin/tables.css' %}">
+{% endblock link %}
+
+
+{% block body %}
+    <div class="table-container">
+
+        <div class="top-bar">
+            <h3 class="headline"> {{name}}
+                <span class="table_name">{{table_name}}</span>
+            </h3>
+            <a href="/admin/create_row/{{name}}" class="abstract-btn create-btn">Create</a>
+            
+        </div>
+
+        <table>
+            <!-- Table Name -->
+            <!-- Table Titles -->
+            <tr>
+                {% for field in fields %}
+                {% comment %} <th>{{model|verbose_name:field}}</th> {% endcomment %}
+                <th>{{model|verbose_name:field}}</th>
+                {% endfor %}
+            </tr class="card">
+
+            <!-- Table values -->
+            {% for row in table %}
+            <tr>
+                <!-- Other columns--> 
+                {% for field in fields %}
+                <td>{{row|get:field}}</td>
+                {% endfor %}
+
+                <!-- Button, Action columns--> 
+                <td class="btn-colmn">
+                    <a href="/admin/edit_row/{{name}}/{{row.id}}" class="table-btn">Edit</a>  
+                </td>
+
+            </tr> 
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+{% endblock body %}

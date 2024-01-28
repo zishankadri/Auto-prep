@@ -1,0 +1,109 @@
+
+<!-- Custom Filters -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base</title>
+
+    <!-- Font roboto -->
+    {% comment %} <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"> {% endcomment %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/customadmin/utilities.css' %}">
+    <link rel="stylesheet" href="{% static 'css/customadmin/base.css' %}">
+    
+    {% block link %}
+
+    {% endblock link %}
+
+</head>
+
+
+<body>
+
+    <div class="wrapper">
+        
+        <nav>
+
+            {% load static %}
+
+            <a href="/" class="logo"> <img src="{% static 'images/logo.svg' %}" alt=""></a>
+
+            <p class="nav-title">Navigation</p>
+            <ul class="side-nav-group">
+                <li> <a href="/admin/"> Dashboard </a> </li>
+                <li> <a href="/admin/settings/"> Settings </a> </li>
+            </ul>
+
+            <p class="nav-title">Tables</p>
+            <ul class="side-nav-group">
+                {% if tables %}
+                {% for table_link in tables %}
+                    <li> <a href="/admin/table/{{table_link.name}}"> {{table_link.name}} </a> </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+
+            <p class="nav-title">Other</p>
+            <ul class="side-nav-group">
+                <li> <a href="/"> Visit Site </a> </li>
+                <li> <a href="/accounts/logout/" class="text-danger"> Logout </a> </li>
+            </ul>
+
+            <!-- Hamburger menu for smaller devices -->
+            <a href="#" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+
+        </nav>
+
+
+        <div class="main">
+        {% block body %}    
+        {% endblock body %}
+        </div>
+
+    </div>
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{% if message.tags %} {{ message.tags }} {% endif %} message">
+            <span class="message-text">
+            {{ message }}
+            </span>
+            <button class="msg-destroy-btn">X</button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% load static %}
+    <script src="{% static 'js/base.js' %}"></script>
+    <script>
+        // Messages
+        const messages = document.getElementsByClassName("message");
+
+        for (let i = 0; i < messages.length; i++) { 
+            const message = messages[i];
+
+            let cutBtn = message.querySelector('.msg-destroy-btn')
+
+            cutBtn.onclick = () => {
+                message.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+</html>
