@@ -1,0 +1,226 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap');
+
+
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Colors */
+:root {
+    --text-color-primary: rgba(255, 255, 255, 0.7);
+    --text-color-secondary: rgba(255, 255, 255, 0.5);
+
+    --sidebar-text-primary: #bbcfe7;
+    --sidebar-text-secondary: #8391a2;
+    
+    /* --dark: #343a40; */
+    --dark: #293038;
+    --mid: #37404a;
+    --mid: #38414d;
+    --light: #45505e;
+}
+/* Paddings */
+:root {
+    --padding: 2em;
+    --radius: 0.6rem;
+    /* --shadow: 0px 0px 22px rgba(0, 0, 0, 0.24); */
+    --shadow: 0px 0px 22px rgba(0, 0, 0, 0.1);
+    --gap-primary: 2em;
+    --gap-secondary: 1em;
+}
+
+h1, h2, h3{
+    color: var(--text-color-primary);
+}
+p, span {
+    color: var(--text-color-secondary);
+}
+
+
+
+
+.wrapper {
+    display: flex;
+}
+
+nav { 
+    top: 0;
+    left: 0;
+    display: flex; flex-direction: column;
+    gap: 1em;
+
+    width: 23vw;
+    height: 100vh;
+    padding: 1rem;
+    
+    background-color: var(--mid);
+
+    overflow-y: scroll;
+}
+/* Remove scrollbar for side navbar. */
+nav::-webkit-scrollbar {
+    display: none;
+}
+  
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: var(--light); */
+    /* padding: 1em; */
+    border-radius: var(--radius);
+    /* box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1); */
+
+}
+.logo img {
+    width: 90px;
+    margin: auto;
+
+}
+
+
+.nav-title {
+    color: var(--sidebar-text-secondary);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.side-nav-group {
+    display: flex; flex-direction: column;
+    list-style-type: none;
+    gap: 0.5em;
+    padding-left: 2em;
+    font-size: 1.1rem;
+
+}
+
+nav li a{
+    display: block;
+    color: var(--sidebar-text-secondary);
+    text-decoration: none;
+    transition-duration: 200ms;
+
+}nav li a:hover{ 
+    color: var(--sidebar-text-primary);
+    }
+
+.main {
+    display: flex; flex-direction: column;
+    gap: var(--padding);
+    padding: var(--padding);
+    background-color: var(--dark);
+    max-height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+.main::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    /* background-color: var(--light); */
+    /* display: hidden; */
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.253);
+    border-radius: 50px;
+  }
+::-webkit-scrollbar-corner { display: none; }
+
+
+
+/* Custom Text Selection */
+::-moz-selection { /* Code for Firefox */
+    color: var(--green);
+    background: var(--purple);
+  }
+  
+  ::selection {
+    color: var(--green);
+    background: var(--purple);
+  }
+
+
+.hamburger{
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    width: 30px;
+    height: 21px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.hamburger span{
+    height: 3px;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+
+
+/*    UTILITY CLASSES FOR ALL TEMPLATES     */
+.container {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--gap-secondary);
+    background-color: var(--mid);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    padding: 1.5em;
+}
+
+input, textarea, select, select option {
+    /* font-size: 1rem; */
+    padding: 0.5em;
+    border: 1px solid var(--light);
+    background-color: var(--mid);
+    color: var(--text-color-primary);
+    outline: none;
+    border-radius: 4px;
+}
+
+
+/* Responsive Navigation Bar */
+@media (max-width: 800px) {
+    nav {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0px;
+    }
+    .hamburger {
+        display: flex;
+    }
+    .nav-links{
+        display: none;
+
+        gap: 0px;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+    .nav-links li a{
+        padding: 0.5rem;
+        border-radius: 0;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+        background-color: var(--mid);
+
+    }
+
+}
