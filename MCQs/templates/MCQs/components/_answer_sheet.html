@@ -1,0 +1,78 @@
+{% load custom_filters %}
+{% load static %}
+
+
+<div class="answer-sheet
+    {% if test.no_of_questions > 20 %} w-[600px] {% else %} w-[450px] {% endif %} 
+    p-8 border-2 border-black">
+    <div class="relative p-4">
+        <!-- OMR markers -->
+        <img src="{% static "images/omr_marker.jpg" %}" alt="" class="absolute w-6 top-0 left-0 translate-x-[-50%] translate-y-[-50%]">
+        <img src="{% static "images/omr_marker.jpg" %}" alt="" class="absolute w-6 top-0 right-0 translate-x-[50%] translate-y-[-50%]">
+        <img src="{% static "images/omr_marker.jpg" %}" alt="" class="absolute w-6 bottom-0 left-0 translate-x-[-50%] translate-y-[50%]">
+        <img src="{% static "images/omr_marker.jpg" %}" alt="" class="absolute w-6 bottom-0 right-0 translate-x-[50%] translate-y-[50%]">
+
+        <div class="flex w-full justify-between border-b pb-4 mb-4 text-slate-700 relative">
+            <!-- <div class="flex justify-end w-full"> -->
+            <div class="flex-1 overflow-hidden">
+                <p> Name: {{student.first_name|truncatechars:10}} {{student.last_name|truncatechars:10}} </p>
+                <p> Class: 4thA </p>
+
+            </div>
+            <div class="min-w-[4rem] max-w-[4rem] aspect-square">
+            <!-- <div class=""> -->
+                <div id="qrcode-{{student.id}}"></div>
+                <script>
+                    var qr = new QRCode(document.getElementById("qrcode-{{student.id}}"), {
+                    text: "{{student.id}}", // Replace with your integer value
+                    width: 100,
+                    height: 100,
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="flex flex-col flex-wrap max-h-[47rem]">
+            {% for question in question_list %}
+            <div id="{{question.id}}" class="flex p-1 gap-2">
+                <div class="flex gap-2 text-slate-700 items-center">
+                    <span class="min-w-[1.25rem] max-w-[1.25rem]">
+                        {{ forloop.counter }}.
+                    </span>
+                    <div class="relative flex px-2 justify-center items-center aspect-square">
+                        <div class="box border rounded-full w-full h-full absolute right-0 top-0 border-black">
+                        </div>
+                        <span class="leading-3 "> A </span>
+                    </div>
+                    <div class="relative flex px-2 justify-center items-center aspect-square">
+                        <div class="box border rounded-full w-full h-full absolute right-0 top-0 border-black">
+                        </div>
+                        <span class="leading-3 "> B </span>
+                    </div>
+                    <div class="relative flex px-2 justify-center items-center aspect-square">
+                        <div class="box border rounded-full w-full h-full absolute right-0 top-0 border-black">
+                        </div>
+                        <span class="leading-3 "> C </span>
+                    </div>
+                    <div class="relative flex px-2 justify-center items-center aspect-square ">
+                        <div class="box border rounded-full w-full h-full absolute right-0 top-0 border-black z-0">
+                        </div>
+                        <span class="leading-3 z-20"> D </span>
+                    </div>
+                </div>
+            </div> <!-- Questoin box -->
+
+            {% endfor %}
+        </div> <!-- Bubbles-->
+
+    </div>
+</div>
+
+
+
+<!-- <div class="border w-full text-sm">
+    <div class="relative flex items-center justify-center w-[4ch] h-8 border">
+        <div class="box border min-w-[4ch] h-8 absolute right-0 top-0 border-slate-400 p-2">    
+        </div>
+        <span class="leading-3 "> {{student.id}} </span>
+    </div>
+</div> -->

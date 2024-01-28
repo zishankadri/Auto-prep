@@ -1,0 +1,103 @@
+
+
+.card-container{
+    display: flex;
+    justify-content: space-around;
+    gap: 2em;
+}
+
+.card {
+    display: flex;
+    /* flex: 1 1; */
+    flex: 1;
+    flex-direction: column;
+    gap: 1em;
+    background-color: var(--mid);
+    padding: 1.5em;
+    border-radius: var(--radius);
+    /* box-shadow: var(--shadow); */
+    font-size: 0.9rem;
+    /* background:linear-gradient(to left, var(--purple), #6c37df); */
+}
+    .card.no-shrink {
+        flex-shrink: 0;
+    }
+    .card h1{
+        /* font-size: 2.5rem; */
+        font-weight: 600;
+    }
+
+    .card-text-bottum {
+        display: flex;
+        gap: 1em;
+        flex-wrap: wrap;
+}
+
+
+.sql-wrapper {
+    background-color: var(--mid);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+}
+
+.sql-runner {
+    display: flex;flex-direction: column;
+    background-color: var(--mid);
+    overflow: hidden;
+    border-radius: var(--radius);
+
+
+}
+.sql-runner h2{
+
+    padding: 0.5em;
+
+    margin-bottom: 1em;
+    background-color: var(--purple);
+    /* background:linear-gradient(to right, var(--purple), var(--green)); */
+    /* background:linear-gradient(to right, var(--purple), #5925cb); */
+    color: var(--text-color-primary);
+
+}
+.run-sql {
+    margin: 0 0.5em 0.5em auto;
+}
+
+.sql-output {
+    border-top: 1px solid var(--light);
+    padding: 1em;
+}
+.sql-output p {
+    background-color: var(--dark);
+    border-radius: var(--radius);
+    padding: 1em;
+    margin-top: 1em;
+}
+.sql-output .error {
+    color: var(--red);
+}
+
+
+.CodeMirror-selected { background-color: var(--purple) !important; }
+
+.cm-editor.cm-focused { outline: 2px solid cyan }
+.cm-editor .cm-content { font-family: "Consolas" }
+
+.CodeMirror{
+    background: none;
+}
+
+.CodeMirror-gutters, .CodeMirror-linenumbers {
+    background: none !important;
+    border-right: 1px solid var(--light);
+    border: none;
+    margin-right: 1em;
+}
+.CodeMirror-linenumber{
+    color: rgba(255, 255, 255, 0.3);
+}
+
+  /* CURSOR */
+  
+    .CodeMirror-cursor { border-left: 1px solid var(--green); }    

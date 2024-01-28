@@ -1,0 +1,93 @@
+{% extends 'customadmin/base.html' %}
+
+<!-- Custom Filters -->
+{% load filters %}
+
+{% block link %}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/customadmin/edit_row.css' %}">
+
+{% endblock link %}
+
+
+{% block body %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3 class="headline">Create <b>{{custom_name}}</b> </h3>
+
+    <div class="fields">
+        {% if custom_name == "Sub Chapters" %}
+            <div class="filter-wrapper">
+                <div class="filter">
+                    <!-- <span>Filter</span> -->
+                    Level: {{ levels|safe }}
+                    Subject: {{ subjects|safe }}
+                </div>
+                <p>
+                    {{ form.chapter.label_tag }}
+                    {{ form.chapter }}
+                </p>
+            </div>
+            
+            <!-- Exclude form.chapter from the automatic rendering -->
+            <!-- Manually exclude the chapter field -->
+            {% for field in form.visible_fields %}
+            {% if field.name != 'chapter' %}
+            <p>
+                {{ field.label_tag }} {{ field }}
+            </p>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+
+            {{form.as_p}}
+
+        {% endif %}
+    </div>
+
+    <div class="action-bar">
+        <button name="create" type="submit" class="abstract-btn save-btn">Create</button>
+    </div>
+
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const subjectSelect = document.getElementById('id_selected_subject');
+    const levelSelect = document.getElementById('id_selected_level');
+    const chapterSelect = document.getElementById('id_chapter');
+
+    // Event listener for subject and level changes
+    subjectSelect.addEventListener('change', updateChapterOptions);
+    levelSelect.addEventListener('change', updateChapterOptions);
+
+    // Function to fetch chapters based on subject and level
+    function updateChapterOptions() {
+        const subjectId = subjectSelect.value;
+        const levelId = levelSelect.value;
+
+        console.log(subjectId);
+        console.log(levelId);
+        // Make an API call to fetch chapters based on subject and level
+        // Replace 'your-api-endpoint' with the actual API endpoint
+        fetch(`/admin/get_chapters/?subject=${subjectId}&level=${levelId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Update the chapter select options
+                chapterSelect.innerHTML = '<option value="">---------</option>';
+                data.forEach(chapter => {
+                    const option = document.createElement('option');
+                    option.value = chapter.id;
+                    option.textContent = chapter.name;
+                    chapterSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching chapters:', error));
+    }
+});
+
+</script>
+{% endblock body %}

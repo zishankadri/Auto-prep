@@ -1,0 +1,53 @@
+{% extends "_base.html" %}
+
+
+
+{% block main %}
+
+{% include "MCQs/components/_create_test_popup.html" %}
+
+<div class="mycontainer group/container">
+    <!-- <h1 class="fancy-headline relative inline-block text-slate-700 text-2xl font-medium"> MCQs Creation & Correction </h1> -->
+    <h3 class="text-lg text-slate-400 pb-4">Running Tests</h3>
+    <div class="flex flex-wrap gap-8">
+        {% for test in test_list %}
+        {% if test.status != "COMPLETED" %}
+        <a href="checkout_test/{{test.id}}/" class="group/card flex flex-col w-full lg:w-[30%] gap-4 p-8 rounded-xl border hover:bg-brand hover:shadow-xl duration-500">
+            <div class="flex justify-between gap-2 items-center">
+                <span class="text-2xl text-slate-700 font-medium group-hover/card:text-white">{{test.name}}</span>
+                <span class="flex items-center px-2 py-1 text-sm border rounded-md text-slate-400 font-medium group-hover/card:text-white">{{test.klass.name}}</span>
+            </div>
+            <span href="" class=" group-hover/card:text-white text-slate-700"> upload answer sheets <i class="ml-0 text-brand group-hover/card:ml-2 group-hover/card:text-white fa-solid fa-arrow-right duration-500"></i></span>
+        </a>
+        {% endif %}
+        {% endfor %}
+        {% comment %} <a href="{% url "create_test_init" %}" class="group/card flex flex-col border-dotted justify-center items-center w-full lg:w-[30%] gap-5 p-8 rounded-xl border-2 hover:bg-brand hover:shadow-xl duration-500"> {% endcomment %}
+        <button onclick="showPopup()" class="group/card flex flex-col border-dashed justify-center items-center w-full lg:w-[30%] gap-5 p-8 rounded-xl border-2 hover:bg-brand hover:shadow-xl duration-500">
+            <span class="text-2xl text-brand font-medium group-hover/card:text-white">+</span>
+        </button>
+    </div>
+
+    <h3 class="text-lg text-slate-400 pt-8 pb-4">Completed Tests</h3>
+    <div class="flex flex-wrap gap-8">
+        {% for test in test_list %}
+        {% if test.status == "COMPLETED" %}
+        <a href="checkout_test/{{test.id}}/" class="group/card flex flex-col w-full lg:w-[30%] gap-4 p-8 rounded-xl border hover:bg-brand hover:shadow-xl duration-500">
+            <div class="flex justify-between gap-2 items-center">
+                <span class="text-2xl text-slate-700 font-medium group-hover/card:text-white">{{test.name}}</span>
+                <span class="flex items-center px-2 py-1 text-sm border rounded-md text-slate-400 font-medium group-hover/card:text-white">{{test.klass.name}}</span>
+            </div>
+            <span href="" class=" group-hover/card:text-white text-slate-700"> upload answer sheets <i class="ml-0 text-brand group-hover/card:ml-2 group-hover/card:text-white fa-solid fa-arrow-right duration-500"></i></span>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    function showPopup() {
+        createTestPopup.style.display = "flex";
+    }
+</script>
+
+{% endblock main %}

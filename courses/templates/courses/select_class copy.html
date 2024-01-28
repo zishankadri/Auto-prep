@@ -1,0 +1,74 @@
+{% extends "_base.html" %}
+
+{% block main %}
+
+<div class="flex flex-col gap-8 items-start py-8 px-8">
+    <div class="border-b w-full pb-8">
+        <select name="select-class" id="select-class" onchange="updateChapters()" class="border rounded-xl text-slate-700 border-slate-300 p-4 min-w-[25ch] ">
+            <option value=""> Select a class </option>
+            {% for k in klasses %}
+            <option value="{{k.id}}" class="text-slate-700" {% if k == klass %}selected{% endif %}>
+                {{k.name}}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="flex flex-col gap-2">
+        {% for chapter in chapters %}
+        <div class="text-xl flex justify-between rounded-md border border-slate-200 text-slate-700">
+            <span class="p-6">
+                {{chapter.name}}
+            </span>
+            <a href="{{ chapter.get_url }}" download class="flex hover:bg-blue-100 px-6 items-center hover:text-blue-600">
+                <i class="fa-solid fa-download"></i>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+
+function updateChapters() {
+    klassId = document.getElementById("select-class").value;
+    var baseUrl = window.location.protocol + '//' + window.location.host;
+
+    if (klassId){
+        window.location.href = `${baseUrl}/courses/${klassId}/`;
+
+    } else { window.location.href = `${baseUrl}/courses/`; } 
+}
+
+// Drawer
+const chapters = document.getElementsByClassName("chapter");
+
+for (let i = 0; i < chapters.length; i++) { 
+    const question = chapters[i];
+
+    let arrow = question.querySelector('.arrow')
+    let topBar = question.querySelector('.top-bar')
+    let p = question.querySelector('p')
+
+    function toggle(event) {
+        if (p.style.display == "block") {  
+            p.style.display = "none";
+            arrow.style.transform = "rotate(0deg)";
+            topBar.style.padding = "0";
+        } 
+        else { 
+            p.style.display = "block"; 
+            arrow.style.transform = "rotate(-180deg)";
+            topBar.style.padding = "0 0 1rem 0";
+
+        }
+    }
+    
+    // btn.addEventListener('click', toggle);
+    question.addEventListener('click', toggle);
+}
+
+</script>
+
+{% endblock main %}

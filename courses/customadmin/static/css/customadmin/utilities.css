@@ -1,0 +1,215 @@
+
+
+/* COLORS */
+
+:root{
+    /* Main Theme */
+    --light: #63449c;
+    --mid: #301d5e;
+    --mid: #4e3380;
+    --dark: #170044;
+    
+    /* my theme */
+    --light: #52318f;
+    --mid: #43237e;
+
+    --text-color-secondary: #dfd2ff;
+    --border-color: #bf76ff;
+
+    /* Colors*/
+    --purple: #905bff;
+    --purple-hover: #7c46f1;
+    --green: #0BFFB7;
+    --green-hover: #04dd9c; 
+    --red: #ff5656;
+    --red-hover: #ff4141;
+    --blue: #9071ff;
+    --blue: #8c80ff;
+    --blue: #8072ff;
+    --blue-hover: #8b6bff;
+
+    /* Units */
+    /* --font-size-primary: 1rem; */
+    /* --font-size-secondary: 1rem; */
+    --radius-primary: 9px; /* 16px */
+    --radius-secondary: 6px; /* 9px */
+    --nav-height: 4rem;
+}
+
+/* :root {
+    --light: #5525bd;
+    --mid: #4014a0;
+    --dark: #250074;
+} */
+
+h1, h2, h3, h4, h5, h6{ color: white; } 
+p, span, label { color: var(--text-color-secondary); } 
+
+
+
+
+/* Other Utility Classes */  
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-column {
+    display: flex; flex-direction: column;
+    /* justify-content: space-between; */
+}
+.align-center {
+    align-items: center;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.gap-05{ gap: 0.5em !important; }
+.gap-1 { gap: 1em  !important; }
+.gap-2 { gap: 2em  !important; }
+
+
+/* Background colors */
+.bg-red { background-color: var(--red) !important; }
+    .bg-red:hover{ background-color: var(--red-hover) !important; }
+
+.bg-green { background-color: var(--green) !important; color: var(--dark) !important;}
+    .bg-green:hover{ background-color: var(--green-hover) !important; }
+
+.bg-blue { background-color: var(--blue) !important; color: var(--dark) !important;}
+    .bg-blue:hover{ background-color: var(--blue-hover) !important; }
+
+
+.text-blue { color: var(--blue); }
+.text-success { color: var(--green); }
+.text-danger { color: var(--red); }
+.text-danger:hover{
+    color: #ff2f2f;
+}
+
+.headline { 
+    font-weight: 500;
+    color: var(--green);
+}
+
+
+/* Basic good looking button */
+.abstract-btn{
+    text-decoration: none;
+    border: none;
+    outline: none;
+    color: var(--text-color-secondary);
+    background-color: var(--purple);
+    background-color: var(--light);
+    padding: 0.5em 1em;
+    border-radius: var(--radius-secondary);
+    border-radius: 4px;
+    cursor: pointer;
+
+}.abstract-btn:hover {
+    color: var(--text-color-primary);
+    }
+
+/* Fancy button */
+.my-btn{
+    border: none;
+    outline: none;
+    display: block;
+    /* flex: 1 1 auto; */
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border-radius: var(--radius-secondary);
+    
+    text-align: center;
+    transition: 0.5s;  /* 0.1 */
+    background-size: 200% auto;
+    color: white;
+    background-image: linear-gradient(to right, var(--purple) 0%, #8e3edf 51%, var(--purple) 100%);
+}
+
+.my-btn:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+
+
+
+.delete-btn { background-color: var(--red); }
+    .delete-btn:hover { background-color: var(--red-hover); }
+
+.save-btn { 
+    background-color: var(--green);
+    color: var(--dark); 
+}
+    .save-btn:hover { 
+        background-color: var(--green-hover); 
+        color: var(--dark);
+    }
+
+
+
+.blur{ background-color: rgba(255, 255, 255, 0.247); backdrop-filter: blur(9px); }
+
+
+
+/* Messages */
+.messages {
+    position:absolute;
+    display: flex; flex-direction: column;
+    top: 0px;
+    width:100%;
+    gap: 4px;
+    padding: 4px;
+    z-index: 99;
+}
+
+.message{
+    border-radius: var(--radius-secondary);
+    display: flex;
+    justify-content: space-between;
+}
+
+.message-text{
+    padding: 1em;
+    color: var(--dark);
+}
+
+.msg-destroy-btn {
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
+    outline: none;
+    color: var(--dark);
+}
+    .msg-destroy-btn:hover{ 
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+.error   { background-color: rgba(255, 112, 112, 0.9); }
+.info    { background-color: rgba(134, 207, 255, 0.9); }
+.success { background-color: rgba(90, 255, 145, 0.9); }
+
+
+
+
+
+/* Custom Text Selection */
+::-moz-selection { /* Code for Firefox */
+    color: var(--green);
+    background: var(--purple);
+  }
+  
+  ::selection {
+    color: var(--dark);
+    background: var(--green);
+}
+
+/* Remove spinners from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin:0;
+}

@@ -1,0 +1,27 @@
+{% load custom_filters %}
+
+<div class="question-paper inline-block p-8">
+    <div class="flex w-full gap-16 justify-between border-b pb-4 text-slate-700">
+        <div class="">
+            <p> Name: {{student.first_name}} {{student.last_name}} </p>
+            <p> Class: {{test.klass.name}} </p>
+        </div>
+    </div>
+
+    {% for question in question_list|shuffle %}
+    <div id="{{question.id}}" class="recommended-question flex flex-col w-full p-2 gap-2 rounded-xl bg-white">
+        <div class="text-lg">
+            <span class="question">{{question.question}} </span>
+        </div>
+        
+        <div class="flex flex-col gap-2 text-slate-700">
+            {% for answer in question|get_shuffled_answers:student %}
+            <div class="question-option relative h-4">
+                <span class="ans">{{answer}}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div> <!-- Questoin box -->
+
+    {% endfor %}
+</div>

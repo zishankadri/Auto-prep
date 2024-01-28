@@ -1,0 +1,235 @@
+{% extends "_base.html" %}
+
+
+
+{% block main %}
+<div class="mycontainer flex gap-8 sm:gap-16 max-h-[100vh] bg-[#edeff3]">
+
+    <form method="post" class="flex flex-col flex-1 gap-4 p-2 max-h-[100vh] overflow-y-scroll items-center">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        {% for form in formset %}
+        <div class="question-form flex flex-col w-full border p-4 gap-6 rounded-xl bg-white">
+            <div class="">
+                {{form.question}}
+            </div>
+        
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-2">
+                    {{form.ans_a}}
+                </div>
+                <div class="flex items-center gap-2 text-sm">
+                    {{form.ans_b}}
+
+                </div>
+                <div class="flex items-center gap-2">
+                    {{form.ans_c}}
+                </div>
+                <div class="flex items-center gap-2">
+                    {{form.ans_d}}
+                </div>
+            </div>
+            
+            <div>
+                <label for="correct_ans" class="block text-sm font-medium leading-6 text-slate-700 pb-2"> Correct answer </label>
+                {{form.correct_ans}}
+            </div>
+
+        </div>
+        {% endfor %}
+        
+
+        <button class="btn-primary self-end">Generate</button>
+    </form>
+
+    <!-- Recommended Questions -->
+    <div id="question-container" class="flex flex-col flex-1 gap-4 items-center max-h-[100vh] overflow-y-scroll">
+        {% for question in recommended_questions %}
+        <div id="{{question.id}}" class="recommended-question flex flex-col w-full border p-4 gap-2 rounded-xl bg-white">
+            <div class="text-lg">
+                <span class="question">{{question.question}} </span>
+            </div>
+
+            <div class="flex flex-col gap-2 text-slate-700">
+                <div class="question-option {% if question.correct_ans == "A" %}text-blue-500{% endif %}">
+                    A) <span class="ans-a">{{question.ans_a}} </span>
+                </div>
+                <div class="question-option {% if question.correct_ans == "B" %}text-blue-500{% endif %}">
+                    B) <span class="ans-b">{{question.ans_b}}</span>
+
+                </div>
+                <div class="question-option {% if question.correct_ans == "C" %}text-blue-500{% endif %}">
+                    C) <span class="ans-c">{{question.ans_c}}</span>
+                </div>
+                <div class="question-option {% if question.correct_ans == "D" %}text-blue-500{% endif %}">
+                    D) <span class="ans-d">{{question.ans_d}}</span>
+                </div>
+                <span type="text" class="correct-ans" hidden >{{question.correct_ans}}</span>
+            </div>
+
+            <div class="flex gap-2 justify-between text-slate-400 pt-2">
+                <div class="flex gap-2">
+                    <button class="btn-like hover:bg-blue-100 p-2 rounded-md
+                    {% if request.user in question.likes.all %} text-blue-600 active {% endif %}
+                    " onclick="like_question({{question.id}})">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span class="likes-count">{{question.likes.count}}</span>
+                    </button>
+
+                    
+                    <button class="btn-dislike hover:bg-blue-100 p-2 rounded-md
+                    {% if request.user in question.dislikes.all %} text-blue-600 active {% endif %}
+                    " onclick="dislikeQuestion({{question.id}})">
+                        <i class="fa-solid fa-thumbs-down"></i>
+                        <span class="dislikes-count">{{question.dislikes.count}}</span>
+                    </button>
+                </div>
+                <button class="btn-add btn-primary">
+                    Insert
+                </button>
+
+            </div>
+        </div> <!-- Questoin box -->
+
+        <!-- <i class="fa-solid fa-caret-up"></i><i class="fa-solid fa-caret-down"></i> -->
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    const questionForms = document.querySelectorAll(".question-form");
+    const recommendedQuestion = document.querySelectorAll(".recommended-question");
+
+    let ACTIVE = questionForms[0];
+    questionForms[0].style.outline = "2px solid #2563eb";
+    
+    // Active/Deactive
+    for (const form of questionForms) {
+        form.addEventListener('click', () => {
+            if (ACTIVE) { ACTIVE.style.outline = "none"; }  // Unselect previous active
+            ACTIVE = form;
+            ACTIVE.style.outline = "2px solid #2563eb";
+        })
+    }
+
+    // ADD
+    for (const questionBox of recommendedQuestion) {
+        let addButton = questionBox.querySelector('.btn-add')
+        let question = questionBox.querySelector('.question').innerHTML
+        let ansA = questionBox.querySelector('.ans-a').innerHTML
+        let ansB = questionBox.querySelector('.ans-b').innerHTML
+        let ansC = questionBox.querySelector('.ans-c').innerHTML
+        let ansD = questionBox.querySelector('.ans-d').innerHTML
+        let correntAns = questionBox.querySelector('.correct-ans').innerHTML
+
+        addButton.addEventListener('click', () => {
+            ACTIVE.querySelector('.question').value = question
+            ACTIVE.querySelector('.ans-a').value = ansA
+            ACTIVE.querySelector('.ans-b').value = ansB
+            ACTIVE.querySelector('.ans-c').value = ansC
+            ACTIVE.querySelector('.ans-d').value = ansD
+            ACTIVE.querySelector('.correct-ans').value = correntAns
+        })
+    }
+    
+</script>
+
+<script>
+
+    const likeButton = document.querySelectorAll('.btn-like')
+    let baseUrl = window.location.protocol + '//' + window.location.host;
+
+    function like_question(question_id) {
+        let question = document.getElementById(question_id);
+        let likeButton = question.querySelector('.btn-like');
+
+        const postData = {
+            question_id: question_id,
+        };
+
+        // Replace 'http://localhost:8000' with your Django development server or production server URL
+        fetch(`${baseUrl}/mcqs/like_unlike_question/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!likeButton.classList.contains('active')){
+                console.log("Liked!");
+                likeButton.classList.add("active")
+                likeButton.classList.add("text-blue-600")
+                let likesCount = question.querySelector('.likes-count');
+                likesCount.innerHTML = parseInt(likesCount.innerHTML) + 1
+            } else {
+                console.log("Un-Liked!");
+                likeButton.classList.remove("active")
+                likeButton.classList.remove("text-blue-600")
+                let likesCount = question.querySelector('.likes-count');
+                likesCount.innerHTML = parseInt(likesCount.innerHTML) - 1
+            }
+            // Un-like if user liked previously
+            if (data.user_disliked_previously){
+                console.log("Un-Disliked!");
+                let dislikeButton = question.querySelector('.btn-dislike');
+                dislikeButton.classList.remove("active")
+                dislikeButton.classList.remove("text-blue-600")
+                let dislikesCount = question.querySelector('.dislikes-count');
+                dislikesCount.innerHTML = parseInt(dislikesCount.innerHTML) - 1
+            }
+        })
+        .catch(error => { console.error('Error:', error); });
+    }
+
+    function dislikeQuestion(question_id) {
+        let question = document.getElementById(question_id);
+        let button = question.querySelector('.btn-dislike');
+
+        const postData = {
+            question_id: question_id,
+        };
+        // Replace 'http://localhost:8000' with your Django development server or production server URL
+        fetch(`${baseUrl}/mcqs/dislike_undislike_question/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            if (!button.classList.contains('active')){
+                console.log("Disliked!");
+                button.classList.add("active")
+                button.classList.add("text-blue-600")
+                let dislikesCount = question.querySelector('.dislikes-count');
+                dislikesCount.innerHTML = parseInt(dislikesCount.innerHTML) + 1
+            } else {
+                console.log("Un-Disliked!");
+                button.classList.remove("active")
+                button.classList.remove("text-blue-600")
+                let dislikesCount = question.querySelector('.dislikes-count');
+                dislikesCount.innerHTML = parseInt(dislikesCount.innerHTML) - 1
+            } 
+            // Un-like if user liked previously
+            if (data.user_liked_previously){
+                console.log("Un-Liked!");
+                let likeButton = question.querySelector('.btn-like');
+                likeButton.classList.remove("active")
+                likeButton.classList.remove("text-blue-600")
+                let likesCount = question.querySelector('.likes-count');
+                likesCount.innerHTML = parseInt(likesCount.innerHTML) - 1
+            }
+        })
+        .catch(error => { console.error('Error:', error); });
+    }
+
+</script>
+
+{% endblock main %}

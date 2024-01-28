@@ -1,0 +1,43 @@
+{% load custom_filters %}
+
+<div class="question-paper inline-block p-8">
+    <div class="flex w-full gap-16 justify-between border-b pb-4 text-slate-700 relative">
+        <div class="">
+            <p> Name: {{student.first_name}} {{student.last_name}} </p>
+            <p> Class: 4thA </p>
+        </div>
+    </div>
+    {% for question in question_list %}
+    <div id="{{question.id}}" class="flex flex-col w-full p-2 gap-2 bg-white">
+        <div class="text-lg box">
+            <span class="question">Q.{{ forloop.counter }}) {{question.question}} </span>
+        </div>
+        <div class="flex flex-col gap-2 text-slate-700">
+            <div class="question-option relative h-4">
+                {% comment %} <span class="box border rounded-sm w-4 h-4 border-slate-700"></span> {% endcomment %}
+                <span class="ans-a">A) </span>
+                <span class="ans-a">{{question.ans_a}} </span>
+            </div>
+            <div class="question-option relative h-4">
+                {% comment %} <span class="box border rounded-sm w-4 h-4 border-slate-700"></span>  {% endcomment %}
+                <span class="ans-a">B) </span>
+                <span class="ans-b">{{question.ans_b}}</span>
+            </div>
+            <div class="question-option relative h-4">
+                {% comment %} <span class="box border rounded-sm w-4 h-4 border-slate-700"></span>  {% endcomment %}
+                <span class="ans-a">C) </span>
+                <span class="ans-c">{{question.ans_c}}</span>
+            </div>
+            <div class="question-option relative h-4">
+                {% comment %} <span class="box border rounded-sm w-4 h-4 border-slate-700"></span>  {% endcomment %}
+                <span class="ans-a">D) </span>
+                <span class="ans-d">{{question.ans_d}}</span>
+            </div>
+        </div>
+        <!-- <div class="flex items-center w-full gap-2 pt-2 text-slate-700 italic"> -->
+            <!-- Your answer: <span class="box relative inline-block min-w-[4rem] h-6 border border-slate-400"></span> -->
+        <!-- </div> -->
+    </div> <!-- Questoin box -->
+
+    {% endfor %}
+</div>

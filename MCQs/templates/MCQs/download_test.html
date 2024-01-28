@@ -1,0 +1,77 @@
+{% extends "_base.html" %}
+
+{% load custom_filters %}
+
+{% block head %}
+    {% load static %}
+    <script src="{% static "js/pdf-lib.js" %}"></script>
+    <script src="https://unpkg.com/html2canvas"></script>
+    <!-- <script src="https://unpkg.com/html2pdf.js"></script> -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+{% endblock head %}
+
+{% block main %}
+<div class="px-8">
+    <div class="flex flex-col gap-8 items-start p-4">
+        {% for student in student_list %}
+            <!-- Question Sheet -->
+            {% if test.answer_sheet_type == "SAME_TEST" %}
+                {% include "MCQs/components/_simple_question_sheet.html" %}
+            {% else %}
+                {% include "MCQs/components/_shuffled_question_sheet.html" %}
+            {% endif %}
+            
+            <!-- Answer Sheet -->
+            {% include "MCQs/components/_answer_sheet.html" %}
+
+            <span class="border-b w-full border-slate-70"></span>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    async function createAndDownloadPDF(sheets_list, fileName) {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+
+        for (const sheet of sheets_list) {
+            const canvas = await html2canvas(sheet);
+            const imageBytes = canvas.toDataURL('image/jpeg').split(',')[1];
+            const image = await pdfDoc.embedJpg(imageBytes);
+
+            const page = pdfDoc.addPage([image.width, image.height]);
+            page.drawImage(image, {
+                x: 0,
+                y: 0,
+                width: image.width,
+                height: image.height,
+            });
+        }
+
+        const pdfBytes = await pdfDoc.save();
+        const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+
+        const a = document.createElement('a');
+        a.href = pdfUrl;
+        a.download = fileName;
+        a.click();
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        const questionSheets = document.querySelectorAll('.question-paper');
+        const answerSheets = document.querySelectorAll('.answer-sheet');
+        const boxes = document.querySelectorAll(".box");
+
+        for (const box of boxes) {
+            // box.style.position = "relative";
+            box.style.top = "8px";
+        }
+        await createAndDownloadPDF(questionSheets, fileName="{{test.name}}_subject.pdf")
+        await createAndDownloadPDF(answerSheets, filneName="{{test.name}}_sheets.pdf")
+        for (const box of boxes) {
+            box.style.top = "initial";
+        }
+    });
+</script>
+{% endblock main %}

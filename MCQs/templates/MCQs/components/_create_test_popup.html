@@ -1,0 +1,91 @@
+<div id="creat_test_popup" class="mycontainer fixed hidden flex-col border border-slate-200 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] gap-8 shadow-xl bg-white rounded-2xl items-center">
+    <button type="button" class="absolute text-slate-700 px-2 py-1 top-4 right-4 hover:bg-blue-100 rounded-md" onclick="hide()">
+        <i class="fa-solid fa-x"></i>  
+    </button>
+    <form method="post" id="start-mcq-form" class="flex flex-col gap-4">
+            {% csrf_token %}
+        <div>
+            <label for="test-name" class="block text-sm font-medium leading-6 text-slate-700">Test name</label>
+            <input type="text" name="test-name" id="test-name" class="regular-input" required>
+        </div>
+
+        <div>
+            <label for="no-of-questions" class="block text-sm font-medium leading-6 text-slate-700">Number of questions</label>
+            <select name="no-of-questions" id="no-of-questions" class="regular-input" required>
+                {% comment %} <option value="2">2</option> {% endcomment %}
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+            </select>
+        </div>
+        <div>
+            <label for="no-of-questions" class="block text-sm font-medium leading-6 text-slate-700">Class</label>
+            <select name="select-class" id="select-class" class="regular-input" required>
+                <option value=""> Select a class </option>
+                {% for k in klasses %}
+                    <option value="{{k.id}}" class="text-slate-700" {% if k == klass %}selected{% endif %}>
+                        {{k.name}}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="no-of-questions" class="block text-sm font-medium leading-6 text-slate-700">Question Sheets</label>
+            <select name="select-sheet-type" id="select-sheet-type" class="regular-input" required>
+                <option value="SAME_TEST"> All students have the same test </option>
+                <option value="UNIQUE_TEST"> Each student has a unique test </option>
+            </select>
+        </div>
+
+        <button class="btn-primary" id="submit-button" onclick="start()" disabled>Start</button>
+    </form>
+
+</div>
+
+<script>
+    const fields = document.querySelectorAll('input, select, textarea');
+    const submitButton = document.getElementById('submit-button');
+
+    function isValid(params) {
+        for (const field of fields) {
+            if (field.value.length < 1) {
+                submitButton.disabled = true
+                return false 
+            }
+        }
+        submitButton.disabled = false
+        return true
+    }
+
+    for (const field of fields) {
+        field.addEventListener('input', isValid)
+    }
+
+    function start() {
+        event.preventDefault();
+        testName = document.getElementById("test-name").value;
+        noOfQuestions = document.getElementById("no-of-questions").value;
+        klassId = document.getElementById("select-class").value;
+        answerSheetType = document.getElementById("select-sheet-type").value;
+
+        console.log(noOfQuestions + ", " + klassId);
+
+        var baseUrl = window.location.protocol + '//' + window.location.host;
+        
+        if (isValid()) {
+            window.location.href = `
+            ${baseUrl}/mcqs/create_test/${klassId}/${testName}/${noOfQuestions}/${answerSheetType}`;
+        
+        } else {
+            alert("Fill out all the fields before submitting the form.")
+        }
+    }
+
+    const createTestPopup = document.getElementById("creat_test_popup");
+    function hide() {
+        createTestPopup.style.display = "none";
+    }
+</script>
+

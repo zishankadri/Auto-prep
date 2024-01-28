@@ -1,0 +1,34 @@
+{% extends 'customadmin/base.html' %}
+
+<!-- Custom Filters -->
+{% load filters %}
+
+{% block link %}
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'css/customadmin/history.css' %}">
+
+{% endblock link %}
+
+{% block body %}
+
+{% for change in history %}
+
+    <div class="box">
+        <h4 class="subject">{{change.subject}}</h4>
+
+        <p class="date">
+            <spanc class="highligt"> {{change.date}} </span>
+        </p>
+
+        <p class="previous-val">From: 
+            <spanc class="highlight"> {{change.previous_value}} </span>
+        </p>
+        <p class="latest-val">To: 
+            <spanc class="highlight"> {{change.latest_value}} </span>
+        </p>
+    </div>
+
+{% endfor %}
+
+{% endblock body %}
