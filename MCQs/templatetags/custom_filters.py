@@ -64,4 +64,4 @@ def get_average_grade(student_list) -> float:
     
 @register.filter(name='get_sub_chapters')
 def get_sub_chapters(chapter):
-    return SubChapter.objects.filter(chapter=chapter)
+    return SubChapter.objects.filter(chapter=chapter).order_by("number")

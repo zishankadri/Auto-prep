@@ -17,8 +17,7 @@ user= auth.sign_in_with_email_and_password('zishankadri9@gmail.com', "Firebase@1
 
 class Chapter(models.Model):
     name = models.CharField(max_length=50)
-    # file = models.FileField(upload_to='chapters/', max_length=100)
-    # file = CloudinaryField('chapter')
+    number = models.IntegerField()
 
     subject = models.ForeignKey("core.Subject", on_delete=models.CASCADE)
     level = models.ForeignKey("core.Level", on_delete=models.CASCADE)
@@ -40,7 +39,8 @@ class Chapter(models.Model):
 
 class SubChapter(models.Model):
     name = models.CharField(max_length=50)
-    # file = CloudinaryField('file')
+    number = models.IntegerField()
+
     file_url = models.TextField(blank=True, editable=False)
     file = models.FileField(blank=True, null=True, max_length=255)
 
@@ -51,17 +51,17 @@ class SubChapter(models.Model):
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+        if self.file:
+            url = storage.child(f"sub_chapters/{self.file.name}").put(self.file.path, user['idToken'])
+            # self.name = storage.child(f"sub_chapters/{self.file.name}").get_url(None)
+            print("url: ", url)
+            print(user['idToken'])
+            print(url['downloadTokens'])
+            # self.file_url = storage.child(f"sub_chapters/{self.file.name}").get_url(url['downloadTokens'])
+            self.file_url = storage.child(f"sub_chapters/{self.file.name}").get_url(url['downloadTokens'])
 
-        url = storage.child(f"sub_chapters/{self.file.name}").put(self.file.path, user['idToken'])
-        # self.name = storage.child(f"sub_chapters/{self.file.name}").get_url(None)
-        print(url)
-        print(user['idToken'])
-        print(url['downloadTokens'])
-        # self.file_url = storage.child(f"sub_chapters/{self.file.name}").get_url(url['downloadTokens'])
-        self.file_url = storage.child(f"sub_chapters/{self.file.name}").get_url(url['downloadTokens'])
-
-        # Clean up: do not save the file locally
-        self.file.delete(save=False)
-
+            # Clean up: do not save the file locally
+            self.file.delete(save=False)
+        
         super().save(*args, **kwargs)
         

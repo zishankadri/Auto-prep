@@ -7,7 +7,7 @@
 <div class="flex flex-col gap-8 items-start py-8 px-8">
     <div class="border-b w-full pb-8">
         <select name="select-class" id="select-class" onchange="updateChapters()" class="border rounded-xl text-slate-700 border-slate-300 p-4 min-w-[25ch] ">
-            <option value=""> Select a class </option>
+            <option value=""> Sélectionnez une classe </option>
             {% for k in klasses %}
             <option value="{{k.id}}" class="text-slate-700" {% if k == klass %}selected{% endif %}>
                 {{k.name}}
@@ -22,7 +22,7 @@
         <div class="chapter group border rounded-xl hover:border-blue-600">
             <div class="top-bar flex justify-between items-center px-6 py-4">
                 <span class="">
-                    <p class="font-extralight"> chapter {{forloop.counter}} </p>
+                    <p class="font-extralight"> chapitre {{chapter.number}} </p>
                     <span class="text-xl font-medium">
                         {{chapter.name}}
                     </span>
@@ -52,35 +52,6 @@
 </div>
 
 <script>
-
-// Assuming you have a URL
-const fileUrl = 'https://firebasestorage.googleapis.com/v0/b/teachers-app-5dff3.appspot.com/o/sub_chapters%2Fstyle_gyTUIR1.css?alt=media&token=96c79491-2ec7-40da-9f3f-bfe48427c5ca';
-
-// Use fetch to get the file content
-fetch(fileUrl)
-  .then(response => response.blob())
-  .then(blob => {
-    // Create a link element
-    const link = document.createElement('a');
-
-    // Set the link's href to a blob URL representing the file content
-    link.href = URL.createObjectURL(blob);
-
-    // Set the download attribute to suggest a filename for the downloaded file
-    link.download = 'your_filename.txt';
-
-    // Append the link to the document
-    document.body.appendChild(link);
-
-    // Trigger a click on the link to start the download
-    link.click();
-
-    // Remove the link from the document
-    document.body.removeChild(link);
-  })
-  .catch(error => console.error('Error fetching the file:', error));
-
-
 function updateChapters() {
     klassId = document.getElementById("select-class").value;
     var baseUrl = window.location.protocol + '//' + window.location.host;

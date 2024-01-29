@@ -33,15 +33,15 @@
         
         <!-- Students -->
         <div class="p-4 flex-grow flex-shrink-0 flex flex-col gap-4 rounded-lg border bg-white overflow-x-auto">
-            <h1 class="text-xl text-slate-700">Students</h1>
+            <h1 class="text-xl text-slate-700">Étudiants</h1>
 
             <div>
                 <div class="flex gap-2 mb-0 items-center">
-                    <span class="text-sm w-[20ch] text-slate-400">First Name</span>
-                    <span class="text-sm w-[20ch] text-slate-400">Last Name</span>
+                    <span class="text-sm w-[20ch] text-slate-400">Prénom</span>
+                    <span class="text-sm w-[20ch] text-slate-400">Nom de famille</span>
                     <form method="post">
                         {% csrf_token %}
-                        <span class="text-sm text-slate-400">Grades</span>
+                        <span class="text-sm text-slate-400">Notes</span>
                         <button name="add_column" class="px-2 ml-2 aspect-square text-slate-400 border rounded-md hover:bg-blue-100"> + </button>
                     </form>
                 </div>
@@ -61,9 +61,9 @@
                 {% for student in student_list %}
                 <div class="student flex gap-2 mb-2 items-center h-10" id="{{student.id}}">
                     <!-- First Name -->
-                    <input type="text" value="{{student.first_name}}" class="regular-input h-full !w-[20ch]" onchange="updateStudent({{student.id}}, this.name, this.value)" name="fname" placeholder="First name" required>
+                    <input type="text" value="{{student.first_name}}" class="regular-input h-full !w-[20ch]" onchange="updateStudent({{student.id}}, this.name, this.value)" name="fname" placeholder="Prénom" required>
                     <!-- Last Name -->
-                    <input type="text" value="{{student.last_name}}" class="regular-input h-full !w-[20ch]" onchange="updateStudent({{student.id}}, this.name, this.value)" name="lname" placeholder="Last name" required>
+                    <input type="text" value="{{student.last_name}}" class="regular-input h-full !w-[20ch]" onchange="updateStudent({{student.id}}, this.name, this.value)" name="lname" placeholder="Nom de famille" required>
                     <!-- Student Grades List -->
                     {% for grade in student.grades %}
                     <input name="grade"
@@ -86,24 +86,24 @@
 
             <!-- Add student -->
             <div> 
-                <p class="text-slate-400 pt-4 pb-2">Add a new student</p>
+                <p class="text-slate-400 pt-4 pb-2">Ajouter un nouvel élève</p>
                 <form class="flex gap-2 items-center h-10" method="post">
                     {% csrf_token %}
-                    <input type="text" value="{{student.first_name}}" class="regular-input h-full !w-[20ch]" name="fname" placeholder="First name" required>
-                    <input type="text" value="{{student.last_name}}" class="regular-input h-full !w-[20ch]" name="lname" placeholder="Last name" required>
+                    <input type="text" value="{{student.first_name}}" class="regular-input h-full !w-[20ch]" name="fname" placeholder="Prénom" required>
+                    <input type="text" value="{{student.last_name}}" class="regular-input h-full !w-[20ch]" name="lname" placeholder="Nom de famille" required>
                     <input type="text" value="{{klass.id}}" name="klass_id" hidden>
-                    <button class="btn-secondary" name="add_student">Add</button>
+                    <button class="btn-secondary" name="add_student">Ajouter</button>
                 </form>
             </div>
         </div>
 
         <!-- Dashboard -->
         <div class="p-4 rounded-lg border bg-white">
-            <h1 class="text-xl mb-4 text-slate-700">Dashboard</h1>
+            <h1 class="text-xl mb-4 text-slate-700">Tableau de bord</h1>
             <div class="flex flex-col items-start gap-4">
                 <div class="flex flex-wrap w-full gap-2">
                     <div class="inline-block py-2 w-64 px-8 rounded-lg border">
-                        <span class="text-slate-400">Average Grade</span>
+                        <span class="text-slate-400">La note moyenne</span>
                         <h1 class="text-3xl text-center my-4">{{student_list|get_average_grade|floatformat:2}}</h1>
                     </div>
                     {% comment %} <div class="inline-block py-2 w-64 px-8 rounded-lg border">

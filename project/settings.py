@@ -206,7 +206,6 @@ STORAGES = {
     },
     'default': {
         'BACKEND': 'django.core.files.storage.FileSystemStorage',
-        # 'BACKEND': 'core.storage_backend.FirebaseStorage',
         'OPTIONS': {
             'location': BASE_DIR / 'media',
         },

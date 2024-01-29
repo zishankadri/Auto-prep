@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from .models import Chapter
 from core.models import Klass, Subject
 from courses.models import SubChapter
 
+@login_required
 def courses(request, klass_id=None):
     klasses = Klass.objects.filter(user=request.user)
     
@@ -13,8 +15,12 @@ def courses(request, klass_id=None):
 
     if klass_id:
         klass = Klass.objects.get(id=klass_id)
-        # chapters = Chapter.objects.filter(level=klass.level)
-        chapters = Chapter.objects.filter(level=klass.level, subject=request.user.subject)
+        
+        chapters = Chapter.objects.filter(
+            level=klass.level,
+            subject=request.user.subject,
+        ).order_by("number")
+
         context['chapters'] = chapters
         context['klass'] = klass
 
@@ -23,10 +29,13 @@ def courses(request, klass_id=None):
     return render(request, "courses/select_class.html", context)
     
 
-from django.views import View
 from django.http import HttpResponse
-import requests
+from django.utils.encoding import uri_to_iri
+from urllib.parse import urlparse
+from django.http import JsonResponse
 
+import requests
+import os
 import pyrebase
 
 firebase = pyrebase.initialize_app({
@@ -47,11 +56,20 @@ user= auth.sign_in_with_email_and_password('zishankadri9@gmail.com', "Firebase@1
 def download_file(request, sub_chapter_id):
     sub_chapter = SubChapter.objects.get(id=sub_chapter_id)
     download_url = sub_chapter.file_url
-    file_name = sub_chapter.name
+
+    file_name = os.path.basename(uri_to_iri(urlparse(download_url).path))
+    file_name = file_name.replace("sub_chapters%2F", "", 1)
+
     # Serve the file with appropriate headers
     response = HttpResponse(content_type='application/octet-stream')
     response['Content-Disposition'] = f'attachment; filename={file_name}'
+
     # Fetch the file content directly from the storage URL
-    response.content = requests.get(download_url).content
+    download_response = requests.get(download_url)
+    if download_response.status_code != 200:
+        # Something went wrong, return an error response
+        return 
+
+    response.content = download_response.content
 
     return response
