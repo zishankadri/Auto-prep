@@ -22,9 +22,9 @@
     {% block head %}{% endblock head %}
 </head>
 
-<body class="font-poppins bg-[#171625] text-white">
+<body class="font-poppins bg-[#141020] text-white">
 
-    <div class="main flex flex-col max-w-[1400px] mx-auto">
+    <div class="main flex flex-col max-w-[1100px] mx-auto">
 
         <!-- Home -->
         <div class="flex flex-col h-[100vh]">
@@ -38,7 +38,7 @@
 
                     {% if  request.user.is_anonymous %}
                     {% comment %} <li><a href="/" class="nav-link"> Home </a></li> {% endcomment %}
-                    <li><a href="/accounts/login/" class="btn-primary"> Log In </a></li>
+                    <li><a href="/accounts/login/" class="btn-secondary !text-slate-200 !border-slate-200 hover:bg-blue-500/40"> Log In </a></li>
                     {% comment %} <li><a href="/accounts/register/" class="btn-primary"> Sign Up </a></li> {% endcomment %}
 
                     {% elif  request.user.is_authenticated %}
@@ -61,50 +61,64 @@
                 <span></span>
             </a>
 
-            <div class="flex px-4 sm:px-32 flex-1 gap-32 items-center">
-                <img src="{% static "images/home.svg" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl">
-                <div class="flex flex-col gap-8 items-start">
-                    <h1 
-                    {% comment %} class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 font-handlee" {% endcomment %}
+            <div class="flex px-4 flex-1 gap-32 items-center">
+                <div class="flex flex-col gap-10 items-start">
+                    {% comment %} <h1 
+                    class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"
                     class="text-6xl font-extrabold text-slate-200 font-pangolin"
                     > 
                     Empower Your Classroom.
-                    </h1>
+                    </h1>  {% endcomment %}
+                    <h1 class="text-5xl text-slate-200 "> 
+                        Revolutionizing <br> 
+                        <span class="fancy-text ">
+                            Education
+                        </span>     
+                        with AI
+                    </h1> 
 
                     <p class="text-slate-300">
                         AI-Enhanced Assessments, and Comprehensive Access to Course Materials for an Elevated Learning Experience.
                     </p>
                     <!-- <a href="/accounts/register/" class="btn-home border-t !border-blue-400">Try For Free</a> -->
                     <div class="flex gap-8">
-                        <a href="/accounts/register/" class="btn-home border-t !border-blue-400">Try For Free</a>
+                        <a href="/accounts/register/" class="btn-home">Try For Free &nbsp; <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i></a>
                         {% comment %} <img src="{% static "./images/arrow.png" %}" alt="" class="relative top-4 h-8"> {% endcomment %}
-                        <img src="{% static "./images/arrow1.png" %}" alt="" class="relative top-4 h-8">
+                        <img src="{% static "./images/arrow1.png" %}" alt="" class="relative top-4 h-6">
                     </div>
                 </div>
+                <img src="{% static "images/home.svg" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl">
 
             </div>
         </div>
 
+        <h1 class="text-4xl text-center pt-24 "> 
+            The 
+            <span class="fancy-text"> 
+                Power Of AI 
+            </span>
+            In The Virtual <br> Classroom
+        </h1>
         <!--    Section B    -->
-        <div class="home-container gap-16">
+        <div class="home-container items-center gap-16">
 
             <div class="flex flex-col gap-8 items-start">
-                <h1 class="text-4xl font-semibold "> 
+                <h1 class="text-4xl  "> 
                     Automatic creation of unique multiple-choice tests
                 </h1>
                 <p class="text-slate-400">This feature generates unique multiple-choice tests for each student automatically, eliminating the need for manual correction.</p>
             </div>
 
-            <img src="{% static "images/section-b.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl border border-slate-800">
+            <img src="{% static "images/section-b.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl  border-slate-800">
 
         </div>
 
         <!--    Section C    -->
-        <div class="home-container  gap-16">
-            <img src="{% static "images/section-c.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl border border-slate-800">
+        <div class="home-container items-center gap-16">
+            <img src="{% static "images/section-c.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl  border-slate-800">
             
             <div class="flex flex-col gap-8 items-start">
-                <h1 class="text-4xl font-semibold "> 
+                <h1 class="text-4xl "> 
                     Automatic MCQ correction by Artificial Intelligence.
                 </h1>
                 <p class="text-slate-400">The site handles the correction of each multiple-choice test.</p>
@@ -113,10 +127,10 @@
         </div>
 
         <!--    Section D    -->
-        <div class="home-container  gap-16">
+        <div class="home-container items-center gap-16">
 
             <div class="flex flex-col gap-8 items-start">
-                <h1 class="text-4xl font-semibold"> 
+                <h1 class="text-4xl"> 
                     Access to each course in the program
                 </h1>
                 <p class="text-slate-400">Three types of courses are downloadable:</p>
@@ -143,7 +157,7 @@
 
         <!--    Section E    -->
         <div class="flex flex-col gap-16 py-8 sm:py-16 items-center w-full ">
-            <h1 class="text-4xl font-semibold"> Frequently Asked Questions </h1>
+            <h1 class="text-4xl"> Frequently Asked Questions </h1>
 
             <div class="w-full flex flex-col justify-center lg:max-w-[80ch] border-t border-slate-200/10">
                 {% for faq in faq_list %}
