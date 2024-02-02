@@ -13,6 +13,10 @@
 
 {% block main %}
 <div class="px-8">
+    <div class="p-8">
+        <button class="btn-primary" onclick="downloadSubjects()">Download Subjects</button>
+        <button class="btn-primary" onclick="downloadSheets()">Download Sheets</button>
+    </div>
     <div class="flex flex-col gap-8 items-start p-4">
         {% for student in student_list %}
             <!-- Question Sheet -->
@@ -32,6 +36,10 @@
 
 <script>
     async function createAndDownloadPDF(sheets_list, fileName) {
+        for (const box of boxes) {
+            // box.style.position = "relative";
+            box.style.top = "8px";
+        }
         const pdfDoc = await PDFLib.PDFDocument.create();
 
         for (const sheet of sheets_list) {
@@ -56,22 +64,24 @@
         a.href = pdfUrl;
         a.download = fileName;
         a.click();
-    }
-
-    document.addEventListener('DOMContentLoaded', async function() {
-        const questionSheets = document.querySelectorAll('.question-paper');
-        const answerSheets = document.querySelectorAll('.answer-sheet');
-        const boxes = document.querySelectorAll(".box");
-
-        for (const box of boxes) {
-            // box.style.position = "relative";
-            box.style.top = "8px";
-        }
-        await createAndDownloadPDF(questionSheets, fileName="{{test.name}}_subject.pdf")
-        await createAndDownloadPDF(answerSheets, filneName="{{test.name}}_sheets.pdf")
         for (const box of boxes) {
             box.style.top = "initial";
         }
-    });
+    }
+
+    // document.addEventListener('DOMContentLoaded', async function() {
+    const questionSheets = document.querySelectorAll('.question-paper');
+    const answerSheets = document.querySelectorAll('.answer-sheet');
+    const boxes = document.querySelectorAll(".box");
+
+
+    async function downloadSubjects() {
+        await createAndDownloadPDF(questionSheets, fileName="{{test.name}}_subject.pdf")
+    }
+    async function downloadSheets() {
+        await createAndDownloadPDF(answerSheets, filneName="{{test.name}}_sheets.pdf")
+    }
+    // });
+
 </script>
 {% endblock main %}

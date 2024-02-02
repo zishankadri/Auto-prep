@@ -6,13 +6,13 @@
 
 {% include "MCQs/components/_create_test_popup.html" %}
 
-<div class="mycontainer group/container">
+<div class="mycontainer group/container bg-gray-50 min-h-[100vh]">
     <!-- <h1 class="fancy-headline relative inline-block text-slate-700 text-2xl font-medium"> MCQs Creation & Correction </h1> -->
-    <h3 class="text-lg text-slate-400 pb-4">Exécution de tests</h3>
+    <h3 class="text-lg text-slate-600 pb-4">Exécution de tests</h3>
     <div class="flex flex-wrap gap-8">
         {% for test in test_list %}
         {% if test.status != "COMPLETED" %}
-        <a href="checkout_test/{{test.id}}/" class="group/card flex flex-col w-full lg:w-[30%] gap-4 p-8 rounded-xl border hover:bg-brand hover:shadow-xl duration-500">
+        <a href="checkout_test/{{test.id}}/" class="group/card flex flex-col w-full lg:w-[30%] gap-4 p-8 rounded-xl shadow-md hover:bg-brand hover:shadow-xl duration-500 bg-white border">
             <div class="flex justify-between gap-2 items-center">
                 <span class="text-2xl text-slate-700 font-medium group-hover/card:text-white">{{test.name}}</span>
                 <span class="flex items-center px-2 py-1 text-sm border rounded-md text-slate-400 font-medium group-hover/card:text-white">{{test.klass.name}}</span>
@@ -22,18 +22,18 @@
         {% endif %}
         {% endfor %}
         {% comment %} <a href="{% url "create_test_init" %}" class="group/card flex flex-col border-dotted justify-center items-center w-full lg:w-[30%] gap-5 p-8 rounded-xl border-2 hover:bg-brand hover:shadow-xl duration-500"> {% endcomment %}
-        <button onclick="showPopup()" class="group/card flex flex-col border-dashed justify-center items-center w-full lg:w-[30%] gap-5 p-8 rounded-xl border-2 hover:bg-brand hover:shadow-xl duration-500">
+        <button onclick="showPopup()" class="group/card flex flex-col border-dashed justify-center items-center w-full lg:w-[30%] gap-5 p-8 rounded-xl border-2 hover:bg-brand hover:shadow-xl duration-500 bg-white">
             <span class="text-2xl text-brand font-medium group-hover/card:text-white">+</span>
         </button>
     </div>
 
     {% if test_list %}
-    <h3 class="text-lg text-slate-400 pt-8 pb-4">Tests terminés</h3>
+    <h3 class="text-lg text-slate-600 pt-8 pb-4">Tests terminés</h3>
     {% endif %}
     <div class="flex flex-wrap gap-8">
         {% for test in test_list %}
         {% if test.status == "COMPLETED" %}
-        <a href="checkout_test/{{test.id}}/" class="group/card flex flex-col w-full lg:w-[30%] gap-4 p-8 rounded-xl border hover:bg-brand hover:shadow-xl duration-500">
+        <a href="checkout_test/{{test.id}}/" class="group/card flex flex-col w-full lg:w-[30%] gap-4 p-8 rounded-xl shadow-md hover:bg-brand hover:shadow-xl duration-500 bg-white border">
             <div class="flex justify-between gap-2 items-center">
                 <span class="text-2xl text-slate-700 font-medium group-hover/card:text-white">{{test.name}}</span>
                 <span class="flex items-center px-2 py-1 text-sm border rounded-md text-slate-400 font-medium group-hover/card:text-white">{{test.klass.name}}</span>
