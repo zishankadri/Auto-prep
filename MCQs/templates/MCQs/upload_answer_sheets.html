@@ -14,13 +14,13 @@
 
   <div class="main relative p-8 flex flex-col h-full gap-4">
     <div class="border-b border-slate-200 pb-4">
-      <a class="btn-secondary inline-block" href="{% url "download_test" test_id=test.id %}">Download Test</a>
+      <a class="btn-secondary inline-block" href="{% url "download_test" test_id=test.id %}">Télécharger l'essai</a>
     </div>
     <div class="flex justify-between items-center text-slate-400 mb-4">
-      Upload answer sheets then generate grades.
+      Téléchargez des feuilles de réponses, puis générez des notes.
       <form method="post">
         {% csrf_token %}
-        <button class="btn-primary" name="generate_grades" onclick="loadingScreen()">Generate Grades</button>
+        <button class="btn-primary" name="generate_grades" onclick="loadingScreen()">Générer des notes</button>
       </form>
     </div>
     
@@ -33,11 +33,11 @@
             <i class="fa-regular fa-folder text-6xl"></i>
           </span>
           <h1 class="text-2xl font-medium text-slate-500"> 
-            Upload Answer Sheets
+            Télécharger des feuilles de réponses
           </h1>
-          <span class="text-slate-400 text-sm">Drag & drop a folder containing all the answer sheets</span>
-          <span class="text-slate-500 text-sm">Or</span>
-          <span class="btn-primary cursor-pointer">Select Files</span>
+          <span class="text-slate-400 text-sm">Glissez-déposez un dossier contenant toutes les feuilles de réponses</span>
+          <span class="text-slate-500 text-sm">Ou</span>
+          <span class="btn-primary cursor-pointer">Sélectionnez les fichiers</span>
       </div>
     </form>
     <div id="loading_popup" class="
