@@ -27,8 +27,8 @@
     <!-- Navigation Bar -->
     <nav class="relative flex justify-between items-center px-8 top-0 left-0 border-b border-border-light">
         {% block nav_logo %}
-        {% comment %} <a href="/" class="h-full"> <img src="{% static "images/logo-black.png" %}" alt="" class="max-h-full"> </a> {% endcomment %}
-        <a href="/" class="h-full text-center items-center flex"> Logo </a>
+    <a href="/" class="h-full items-center flex"> <img src="{% static "images/logo.png" %}" alt="" class="max-h-[60%]"> </a>
+        {% comment %} <a href="/" class="h-full text-center items-center flex"> Logo </a> {% endcomment %}
 
         {% endblock nav_logo %}
         <!-- Nav-links --> 
@@ -36,13 +36,13 @@
             {% if request.user.is_authenticated %}
             {% comment %} <li><a href="/" class="nav-link"> Home </a></li> {% endcomment %}
             <li><a href="/classes/" class="nav-link"> Classes </a></li>
-            <li><a href="/courses/" class="nav-link"> Courses </a></li>
-            <li><a href="/mcqs/" class="nav-link"> MCQs </a></li>
+            <li><a href="/courses/" class="nav-link"> Cours </a></li>
+            <li><a href="/mcqs/" class="nav-link"> QCM </a></li>
             {% if request.user.is_superuser %}
             <li> <a href="/admin/" class="nav-link" target="_blank"> Admin </a></li>
             {% endif %}
             
-            <li><a href="/accounts/logout/" class="nav-link"> Log Out </a></li>
+            <li><a href="/accounts/logout/" class="nav-link"> Se déconnecter </a></li>
             
             {% endif %}
 
