@@ -37,6 +37,7 @@ models = [
         name="Sub Chapters", 
         model=SubChapter,
         fields=["name", "chapter", "chapter.subject", "chapter.level"],
+        order_by=["chapter__level", "chapter__subject", "chapter"]
     ),
     Table(
         name="FAQs",
