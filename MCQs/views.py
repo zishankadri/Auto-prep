@@ -13,14 +13,26 @@ import json
 from .forms import QuestionForm
 from .models import Question, Test, CorrectAnswerList
 from core.models import Klass, Student
-import random
-
+from courses.models import Chapter
 from . import mcq_auto_scanner
 
 
 def mcqs(request):
     test_list = Test.objects.filter(klass__user=request.user)
     klasses = Klass.objects.filter(user=request.user)
+    
+    if request.method == "POST":
+        test_name = request.POST['test-name']
+        no_of_questions= request.POST['no-of-questions']
+        klass_id = request.POST['select-class']
+        chapter_id = request.POST['select-chapter']
+        answer_sheet_type = request.POST['select-sheet-type']
+        is_public = request.POST['is_public']
+        print("hello yolo ")
+        # return redirect(f"/mcqs/")
+        return redirect(f"/mcqs/create_test/{klass_id}/{test_name}/{no_of_questions}/{answer_sheet_type}/{is_public}/{chapter_id}")
+
+
     context = {
         'test_list': test_list,
         'klasses': klasses,
@@ -29,10 +41,12 @@ def mcqs(request):
     return render(request, "MCQs/mcqs.html", context)
 
 
-def create_test(request, klass_id, test_name, no_of_questions, answer_sheet_type):
-    print(answer_sheet_type)
-
+def create_test(request, klass_id, test_name, no_of_questions, answer_sheet_type, is_public, chapter_id):
     klass = Klass.objects.get(id=klass_id)
+    try:
+        chapter = Chapter.objects.get(id=chapter_id)
+    except:
+        chapter = None
 
     QuestionFormset = formset_factory(QuestionForm, extra=int(no_of_questions))
 
@@ -53,18 +67,31 @@ def create_test(request, klass_id, test_name, no_of_questions, answer_sheet_type
             for form in formset:
                 question = form.save(commit=False)
                 question.test = test
+                question.chapter = chapter
+                if is_public == "True":
+                    question.is_public = True
+                else:
+                    question.is_public = False
+
                 question.save()
 
             return redirect(f"/mcqs/download_test/{test.id}/")
 
     formset = QuestionFormset()
-
     # Fetch questions of level and subject to recommend & like/dislike
-    recommended_questions = Question.objects.filter(
-        test__klass__user__subject=request.user.subject,
-        test__klass__level=klass.level,
-        is_public=True
-    )
+    if chapter:
+        recommended_questions = Question.objects.filter(
+            test__klass__user__subject=request.user.subject,
+            test__klass__level=klass.level,
+            chapter=chapter,
+            is_public=True
+        )
+    else:
+        recommended_questions = Question.objects.filter(
+            test__klass__user__subject=request.user.subject,
+            test__klass__level=klass.level,
+            is_public=True
+        )
 
     context = {
         'formset': formset,
@@ -73,6 +100,12 @@ def create_test(request, klass_id, test_name, no_of_questions, answer_sheet_type
 
     return render(request, "MCQs/create_test.html", context)
 
+
+def delete_test(request, test_id):
+    test = Test.objects.get(id=test_id)
+    test.delete()
+    return redirect("/mcqs/")
+    
 
 def download_test(request, test_id):
     test = Test.objects.get(id=test_id)

@@ -16,7 +16,7 @@ auth = firebase.auth()
 user= auth.sign_in_with_email_and_password('zishankadri9@gmail.com', "Firebase@1234")
 
 class Chapter(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=200)
     number = models.IntegerField()
 
     subject = models.ForeignKey("core.Subject", on_delete=models.CASCADE)
@@ -35,10 +35,10 @@ class Chapter(models.Model):
         converted_url = f"{base_url}/upload/fl_attachment:{self.name}/{file_path}"
 
         return converted_url
-    
+
 
 class SubChapter(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=200)
     number = models.IntegerField()
 
     file_url = models.TextField(blank=True, editable=False)

@@ -126,7 +126,7 @@ def classes(request, klass_id=None):
                     new_student.grades.append(None)
 
             new_student.save()
-            redirect
+            # redirect
 
         if 'add_column' in request.POST:
             klass.add_grade_column()
@@ -138,9 +138,9 @@ def classes(request, klass_id=None):
                 if klass_id!=None or index!=None:
                     klass = Klass.objects.get(id=klass_id)
                     klass.remove_grade_column(index)
-                    return redirect('/classes/')
+                    # return redirect('/classes/')
             except:
-                messages.error(request, "Something went wrong, Try refreshing the page")
+                messages.error(request, "Quelque chose s'est mal passé. Essayez de rafraîchir la page.")
 
     klasses = Klass.objects.filter(user=request.user)
 

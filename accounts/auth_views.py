@@ -10,7 +10,7 @@ from accounts.models import UserAccount
 from .forms import UserAccountForm
 
 from .utils import generate_ref_code, send_email
-from .emails import send_verification_email
+from .emails import send_verification_email, send_change_password_email
 
 def register_page(request):
     domain_name = request.build_absolute_uri('/')[:-1]
@@ -84,26 +84,78 @@ def verify_email_page(request, auth_token):
     except:
         return redirect("/accounts/error/")
 
-def verify_phone_page(request, auth_token):
-    try:
-        user = UserAccount.objects.get(phone_auth_token=auth_token)
 
-        user.verified_phone = True
+def forgot_password(request):
+    domain_name = request.build_absolute_uri('/')[:-1]
+
+    if request.method == "POST":
+        email = request.POST["email"]
+        try:
+            user = UserAccount.objects.get(email=email)
+        except:
+            messages.info(request, f'Incorrect email.')
+            return render(request, "accounts/login.html")
+        
+        send_change_password_email(email=user.email, auth_token=user.email_auth_token, domain_name=domain_name)
+        print("success")
+        return render(request, "accounts/check_your_email.html", {'email': user.email})
+
+    return render(request, "accounts/forgot_password.html")
+
+# @login_required
+def change_password(request, email, auth_token):
+    try:
+        user = UserAccount.objects.get(email=email)
+        if not user.verified_email:
+            messages.info(
+                request, f'This email is not verified, register again to get verification emial.')
+            return redirect("/accounts/register/")
+    except:
+        messages.info(request, f'Incorrect email.')
+        return render(request, "accounts/login.html")
+
+    if user.email_auth_token != auth_token:
+        return redirect("accounts/error/")
+
+    if request.method == "POST":
+        new_password = request.POST["new_password"]
+        conform_new_password = request.POST["confirm_password"]
+
+        # Gate keeping.
+        if new_password != conform_new_password:
+            messages.error(
+                request, "Passwords didn't match, Please try again.")
+            return redirect(f"/accounts/change_password/{user.email}/{user.email_auth_token}/")
+        if len(new_password) < 8:
+            messages.error(
+                request, "Passwords must contain at least 8 characters.")
+            return redirect(f"/accounts/change_password/{user.email}/{user.email_auth_token}/")
+
+        # All Correct.
+
+        # Record change in history.
+        subject = "Changed Password"
+        previous_value = str(user.password)
+        latest_value = new_password
+        # user.record_history(subject, previous_value, latest_value)
+
+        # OK, Change password.
+        user.set_password(new_password)
+        user.auth_token = generate_ref_code()
         user.save()
 
-        messages.success(request, f'Your phone number has been verified!')
-        return redirect("/accounts/login/")
+        messages.success(request, "Password changed successfully!")
+        return redirect('/')
 
-    except:
-        return redirect("/accounts/error/")
+    return render(request, "accounts/change_password.html")
+
+
 
 
 
 
 
 # Trash
-
-
 
 @login_required
 def profile_page(request):
@@ -154,89 +206,6 @@ def profile_page(request):
         'phone': user.phone,
     }
     return render(request, "accounts/profile.html", context)
-
-
-@login_required
-def change_phone_page(request, auth_token):
-    user = request.user
-    try:
-        if not user.is_verified:
-            messages.info(
-                request, f'This email is not verified, register again to get verification emial.')
-            return redirect("/accounts/register/")
-    except:
-        messages.info(request, f'Incorrect email.')
-        return render(request, "accounts/login.html")
-
-    if user.auth_token != auth_token:
-        return redirect("accounts/error/")
-
-    if request.method == "POST":
-        new_phone = request.POST["new_phone"]
-
-        subject = "Changed Phone Number"
-        previous_value = str(user.phone)
-        latest_value = str(new_phone)
-        user.record_history(subject, previous_value, latest_value)
-
-        # OK, Change phone.
-        user.phone = new_phone
-        user.auth_token = generate_ref_code()
-        user.save()
-
-        messages.success(request, "Phone changed successfully!")
-        return redirect(f"/")
-
-    return render(request, "accounts/change_phone.html")
-
-# @login_required
-
-
-def change_password_page(request, email, auth_token):
-    try:
-        user = UserAccount.objects.get(email=email)
-        if not user.is_verified:
-            messages.info(
-                request, f'This email is not verified, register again to get verification emial.')
-            return redirect("/accounts/register/")
-    except:
-        messages.info(request, f'Incorrect email.')
-        return render(request, "accounts/login.html")
-
-    if user.auth_token != auth_token:
-        return redirect("accounts/error/")
-
-    if request.method == "POST":
-        new_password = request.POST["new_password"]
-        conform_new_password = request.POST["conform_new_password"]
-
-        # Gate keeping.
-        if new_password != conform_new_password:
-            messages.error(
-                request, "Passwords didn't match, Please try again.")
-            return redirect(f"/accounts/change_password/{user.email}/{user.auth_token}/")
-        if len(new_password) < 8:
-            messages.error(
-                request, "Passwords must contain at least 8 characters.")
-            return redirect(f"/accounts/change_password/{user.email}/{user.auth_token}/")
-
-        # All Correct.
-
-        # Record change in history.
-        subject = "Changed Password"
-        previous_value = str(user.password)
-        latest_value = new_password
-        user.record_history(subject, previous_value, latest_value)
-
-        # OK, Change password.
-        user.set_password(new_password)
-        user.auth_token = generate_ref_code()
-        user.save()
-
-        messages.success(request, "Password changed successfully!")
-        return redirect(f"/")
-
-    return render(request, "accounts/change_password.html")
 
 
 @login_required
@@ -311,7 +280,53 @@ def error(request):
     return render(request, "accounts/error.html")
 
 
+@login_required
+def change_phone_page(request, auth_token):
+    user = request.user
+    try:
+        if not user.is_verified:
+            messages.info(
+                request, f'This email is not verified, register again to get verification emial.')
+            return redirect("/accounts/register/")
+    except:
+        messages.info(request, f'Incorrect email.')
+        return render(request, "accounts/login.html")
 
+    if user.auth_token != auth_token:
+        return redirect("accounts/error/")
+
+    if request.method == "POST":
+        new_phone = request.POST["new_phone"]
+
+        subject = "Changed Phone Number"
+        previous_value = str(user.phone)
+        latest_value = str(new_phone)
+        user.record_history(subject, previous_value, latest_value)
+
+        # OK, Change phone.
+        user.phone = new_phone
+        user.auth_token = generate_ref_code()
+        user.save()
+
+        messages.success(request, "Phone changed successfully!")
+        return redirect(f"/")
+
+    return render(request, "accounts/change_phone.html")
+
+
+
+def verify_phone_page(request, auth_token):
+    try:
+        user = UserAccount.objects.get(phone_auth_token=auth_token)
+
+        user.verified_phone = True
+        user.save()
+
+        messages.success(request, f'Your phone number has been verified!')
+        return redirect("/accounts/login/")
+
+    except:
+        return redirect("/accounts/error/")
 
 
 
@@ -375,4 +390,5 @@ def error(request):
 #     }
 
 #     return render(request, "accounts/register.html", context)
+
 

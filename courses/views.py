@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 from .models import Chapter
 from core.models import Klass, Subject
@@ -73,3 +75,29 @@ def download_file(request, sub_chapter_id):
     response.content = download_response.content
 
     return response
+
+
+@login_required
+@csrf_exempt
+def get_chapter_list(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        klass_id = data.get('klass_id', '')
+
+        if klass_id:
+            klass = Klass.objects.get(id=klass_id)
+            print(klass)
+            chapter_list = list(Chapter.objects.filter(
+                level=klass.level,
+                subject=klass.user.subject
+
+            ).values_list('id', 'name'))
+
+            # chapter_list = [[x.id, x.name] for x in Chapter.objects.filter(level=klass.level,subject=klass.user.subject)]
+            print(chapter_list)
+
+            return JsonResponse({'chapterList': chapter_list}, status=200)
+        else:
+            return JsonResponse({'error': f'klass_id is required'}, status=400)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed.'}, status=405)

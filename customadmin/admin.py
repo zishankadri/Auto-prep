@@ -4,7 +4,7 @@ from django.contrib import admin
 # Custom Admin Registration.
 from core.models import Student, Klass, Faq, Level, Subject
 from courses.models import Chapter, SubChapter
-from MCQs.models import Test, CorrectAnswerList
+from MCQs.models import Test, CorrectAnswerList, Question
 from accounts.models import UserAccount
 from paypal.standard.ipn.models import PayPalIPN
 from .models import GeneralData
@@ -31,7 +31,13 @@ models = [
         name="Chapters",
         model=Chapter,
         fields=["name", "subject", "level"],
-        order_by=["level", "subject"]
+        order_by=["test"]
+    ),
+    Table(
+        name="Questions",
+        model=Question,
+        fields=["test", "question", "is_public"],
+        # order_by=["level", "subject"]
     ),
     Table(
         name="Sub Chapters", 

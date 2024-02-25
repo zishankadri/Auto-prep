@@ -83,9 +83,10 @@ class Question(models.Model):
     )
 
     test = models.ForeignKey("MCQs.Test", on_delete=models.CASCADE)
+    chapter = models.ForeignKey("courses.Chapter", on_delete=models.CASCADE, null=True)
 
     question = models.TextField()
-
+    
     # Answers a), b), c), d)
     ans_a = models.CharField(max_length=100)
     ans_b = models.CharField(max_length=100)
@@ -106,8 +107,6 @@ class Question(models.Model):
 
         if existing_question:
             self.is_public = False
-        else:
-            self.is_public = True
 
         super().save(*args, **kwargs)
 

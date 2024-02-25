@@ -12,23 +12,28 @@
   <script src="{% static "js/dropzone.min.js" %}"></script>
   <link rel="stylesheet" href="{% static "css/dropzone.min.css" %}" type="text/css" />
 
-  <div class="main relative p-8 flex flex-col justify-center items-center h-full gap-4 text-slate-400">
-    <div class="flex flex-col mb-4">
+  <div class="main relative p-8 flex flex-col justify-center items-center h-full text-slate-400">
+    <div class="flex flex-col mb-4 gap-4">
       <h1 class="text-xl text-slate-400">
-        Completed on {{test.date_completed}}
+        Terminé le {{test.date_completed}}
       </h1>
+
       <div class="flex gap-4">
-        <div class="inline-block py-2 w-64 px-8 rounded-lg border mt-4">
-          <span class="">Average Grade</span>
-          <h1 class="text-3xl text-center my-4 text-blue-500">{{test.average_grades}}</h1>
+        <div class="inline-block py-2 w-64 px-8 rounded-lg border">
+          <span class="">La note moyenne</span>
+          <h1 class="text-3xl text-center my-4 text-blue-500">{{test.average_grades|floatformat:2}}</h1>
         </div>
-        <div class="inline-block py-2 w-64 px-8 rounded-lg border mt-4">
-          <span class="">Completion Rate</span>
-          <h1 class="text-3xl text-center my-4 text-blue-500">{{test.completion_rate}}%</h1>
+        <div class="inline-block py-2 w-64 px-8 rounded-lg border">
+          <span class="">Taux d'achèvement</span>
+          <h1 class="text-3xl text-center my-4 text-blue-500">{{test.completion_rate|floatformat:2}}%</h1>
         </div>
       </div>
+      <a class="btn-secondary !inline-block self-end !border-red-400 !text-red-400 hover:bg-red-400 hover:!text-white"
+      href="{% url "delete_test" test_id=test.id %}">
+      Supprimer l'essai
+      </a>
     </div>
-</div>
+  </div>
     
 
 {% endblock main %}
