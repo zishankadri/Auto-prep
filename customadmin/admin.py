@@ -31,7 +31,7 @@ models = [
         name="Chapters",
         model=Chapter,
         fields=["name", "subject", "level"],
-        order_by=["test"]
+        order_by=["level", "subject"]
     ),
     Table(
         name="Questions",
