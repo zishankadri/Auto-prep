@@ -931,6 +931,15 @@ input[type="number"]::-webkit-inner-spin-button,
   margin: 0px !important;
 }
 
+.m-auto{
+  margin: auto;
+}
+
+.mx-4{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
@@ -2454,6 +2463,11 @@ input[type="number"]::-webkit-inner-spin-button,
 }
 
 @media (min-width: 1024px){
+  .lg\:mx-16{
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
   .lg\:\!flex{
     display: flex !important;
   }
@@ -2473,6 +2487,16 @@ input[type="number"]::-webkit-inner-spin-button,
   .lg\:px-8{
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:px-12{
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .lg\:px-16{
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 }
 

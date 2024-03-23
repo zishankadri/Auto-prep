@@ -20,5 +20,8 @@ urlpatterns = [
     path('update_student/', views.update_student, name='update_student'),
     path('update_student_grade/', views.update_student_grade, name='update_student_grade'),
     path('delete_student/', views.delete_student, name='delete_student'),
+
+    # CGV URL
+    path('cgv/', views.cgv, name="cgv")
     
 ]

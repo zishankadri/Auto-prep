@@ -281,3 +281,7 @@ def delete_student(request):
             return JsonResponse({'error': f'student_id is required'}, status=400)
     else:
         return JsonResponse({'error': 'Only POST requests are allowed.'}, status=405)
+
+
+def cgv(request):
+    return render(request, "cgv.html")
