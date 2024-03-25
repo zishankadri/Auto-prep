@@ -76,6 +76,7 @@ def scan(test, input_folder, output_folder):
 
         command = f"python3 ./MCQs/OMRChecker/main.py -i '{input_folder}' -o '{output_folder}'"
         subprocess.run(command, shell=True)
+        print("4")
 
         data = read_output(output_folder)
 

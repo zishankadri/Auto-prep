@@ -1,16 +1,24 @@
 {% extends "_base.html" %}
 {% load static %}
 
-{% block main %}
-  <style>
-    .main {
-      height: var(--full-height);
-      max-height: var(--full-height);
-    }
-  </style>
-  
+
+{% block head %}
+
   <script src="{% static "js/dropzone.min.js" %}"></script>
   <link rel="stylesheet" href="{% static "css/dropzone.min.css" %}" type="text/css" />
+
+{% endblock head %}
+
+{% block main %}
+  {% comment %} 
+  <style> 
+     .main { 
+       height: var(--full-height);
+       max-height: var(--full-height); 
+     } 
+  </style> 
+  {% endcomment %}
+  
 
   <div class="main relative p-8 flex flex-col h-full gap-4">
     <div class="border-b border-slate-200 pb-4 flex gap-4">
@@ -20,8 +28,24 @@
        Supprimer l'essai
       </a>
     </div>
-    <div class="flex justify-between items-center text-slate-400 mb-4">
-      Téléchargez des feuilles de réponses, puis générez des notes.
+
+    <div class="py-8">
+      <p class="text-slate-400"> Capturez des images des feuilles de réponses remplies et téléchargez-les ici pour une notation automatique par notre modèle d'IA.</p>
+      <p class="mt-4 text-brand"> • Assurez-vous de capturer la photo de face avec des angles minimaux.</p>
+      <p class="text-brand"> • Assurez-vous que les quatre marqueurs de coin sont entièrement visibles.</p>
+
+      <div class="flex w-full gap-8 py-4 flex-col sm:flex-row">
+        <div class="relative sm:w-[45%] max-w-[400px]">
+          <img src="{% static "images/example_answersheet_correct.jpg" %}" alt="" class="h-full border border-green-400">
+          <i class="fa-regular fa-circle-check text-4xl absolute bottom-4 left-4 text-green-400"></i>
+        </div>
+        <div class="relative sm:w-[45%] max-w-[400px]">
+          <img src="{% static "images/example_answersheet_incorrect.jpg" %}" alt="" class="h-full border border-red-400">
+          <i class="fa-regular fa-circle-xmark text-4xl absolute bottom-4 left-4 text-red-400"></i>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-end items-center text-slate-400 mb-4">
       <form method="post">
         {% csrf_token %}
         <button class="btn-primary" name="generate_grades" onclick="loadingScreen()">Générer des notes</button>
@@ -31,7 +55,7 @@
     <!-- <form id="my-awesome-dropzone" action="{% url "checkout_test" test_id=test.id%}" class="dropzone !p-0 !border-slate-400 !border-dashed rounded-xl overflow-hidden h-full"> -->
     <form id="my-dropzone" action="{% url "checkout_test" test_id=test.id%}" class="dropzone !p-0 !border-slate-400 !border-dashed rounded-xl overflow-hidden h-full">
       {% csrf_token %}
-      <div class="dz-message !m-0 flex flex-col p-4 gap-4 justify-center items-center h-full bg-slate-50" data-dz-message>
+      <div class="dz-message !m-0 flex flex-col py-24  gap-4 justify-center items-center h-full bg-slate-50" data-dz-message>
           <span class=" text-slate-400 relative">
             <i class="fa-regular fa-circle-up absolute text-2xl text-white right-[50%] bottom-3 bg-slate-400 rounded-full translate-x-[50%]"></i>
             <i class="fa-regular fa-folder text-6xl"></i>
