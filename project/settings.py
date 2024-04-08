@@ -113,7 +113,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # PostegreSQL database (Local)
 
-if DEV_ENVIROMENT:
+if not DEV_ENVIROMENT:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',

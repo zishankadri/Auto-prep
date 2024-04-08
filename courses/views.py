@@ -41,18 +41,28 @@ import os
 import pyrebase
 
 firebase = pyrebase.initialize_app({
-    "apiKey": "AIzaSyA2VYCK_i2ynmKDi7u3pRoYLQe-j_4UAyo",
-    "authDomain": "teachers-app-5dff3.firebaseapp.com",
-    "projectId": "teachers-app-5dff3",
-    "storageBucket": "teachers-app-5dff3.appspot.com",
-    "messagingSenderId": "828048730033",
-    "appId": "1:828048730033:web:3c5bfd46428729e7c03f90",
-    "measurementId": "G-3F8DFDSW8W",
+    # "apiKey": "AIzaSyA2VYCK_i2ynmKDi7u3pRoYLQe-j_4UAyo",
+    # "authDomain": "teachers-app-5dff3.firebaseapp.com",
+    # "projectId": "teachers-app-5dff3",
+    # "storageBucket": "teachers-app-5dff3.appspot.com",
+    # "messagingSenderId": "828048730033",
+    # "appId": "1:828048730033:web:3c5bfd46428729e7c03f90",
+    # "measurementId": "G-3F8DFDSW8W",
+    # "databaseURL": "",
+
+    "apiKey": "AIzaSyDm0usQwaWicoqaQfCeHaH7Kn4AxGEBtyc",
+    "authDomain": "autoprep-b9b7a.firebaseapp.com",
+    "projectId": "autoprep-b9b7a",
+    "storageBucket": "autoprep-b9b7a.appspot.com",
+    "messagingSenderId": "910993355982",
+    "appId": "1:910993355982:web:53ff253f4230f2369f0c9f",
+    "measurementId": "G-C3NH95CH5Z",
     "databaseURL": "",
+
 })
 storage = firebase.storage()
-auth = firebase.auth()
-user= auth.sign_in_with_email_and_password('zishankadri9@gmail.com', "Firebase@1234")
+# auth = firebase.auth()
+# user= auth.sign_in_with_email_and_password('zishankadri9@gmail.com', "Firebase@1234")
 
 
 def download_file(request, sub_chapter_id):

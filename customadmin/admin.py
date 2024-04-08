@@ -34,16 +34,16 @@ models = [
         order_by=["level", "subject"]
     ),
     Table(
-        name="Questions",
-        model=Question,
-        fields=["test", "question", "is_public"],
-        # order_by=["level", "subject"]
-    ),
-    Table(
         name="Sub Chapters", 
         model=SubChapter,
         fields=["name", "chapter", "chapter.subject", "chapter.level"],
         order_by=["chapter__level", "chapter__subject", "chapter"]
+    ),
+    Table(
+        name="Questions",
+        model=Question,
+        fields=["test", "question", "is_public"],
+        # order_by=["level", "subject"]
     ),
     Table(
         name="FAQs",
