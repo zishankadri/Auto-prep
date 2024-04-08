@@ -38,7 +38,7 @@
 
                     {% if  request.user.is_anonymous %}
                     {% comment %} <li><a href="/" class="nav-link"> Home </a></li> {% endcomment %}
-                    <li><a href="/accounts/login/" class="btn-secondary !text-slate-200 !border-slate-200 hover:bg-blue-500/40"> Log In </a></li>
+                    <li><a href="/accounts/login/" class="btn-secondary !text-slate-200 !border-slate-200 hover:bg-blue-500/40"> Se connecter </a></li>
                     {% comment %} <li><a href="/accounts/register/" class="btn-primary"> Sign Up </a></li> {% endcomment %}
 
                     {% elif  request.user.is_authenticated %}
@@ -70,19 +70,20 @@
                     </h1>  {% endcomment %}
                     <h1 class="text-5xl text-slate-200 "> 
                         
-                        Revolutionize <br> 
+                        Révolutionner <br> 
                         <span class="fancy-text ">
-                            Education
+                            Éducation
                         </span>     
-                        with AI
+                        avec l'IA
+
                     </h1> 
 
                     <p class="text-slate-300">
-                        AI-enhanced assessments and full access to course materials for an elevated learning experience.
+                        Évaluations améliorées par l'IA et accès complet au matériel de cours pour une expérience d'apprentissage améliorée.
                     </p>
                     <!-- <a href="/accounts/register/" class="btn-home border-t !border-blue-400">Try For Free</a> -->
                     <div class="flex gap-8">
-                        <a href="/accounts/register/" class="btn-home">Get Started &nbsp; <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i></a>
+                        <a href="/accounts/register/" class="btn-home">Commencer &nbsp; <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i></a>
                         {% comment %} <img src="{% static "./images/arrow.png" %}" alt="" class="relative top-4 h-8"> {% endcomment %}
                         <img src="{% static "./images/arrow1.png" %}" alt="" class="relative top-4 h-6">
                     </div>
