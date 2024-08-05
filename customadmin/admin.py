@@ -50,10 +50,10 @@ models = [
         model=Faq,
         fields = ["question", "answer"],
     ),
-    # Table(
-    #     name="Test", model=Test,
-    #     fields=["id", "name", "status"],
-    # ),
+    Table(
+        name="Test", model=Test,
+        fields=["id", "name", "status"],
+    ),
     # Users 
     Table(
         name="UserAccounts",
@@ -69,7 +69,7 @@ models = [
         order_by=["-payment_date"],
     ),
         # Table(name="Student", model=Student, order_by=""),
-    # Table(name="Klass", model=Klass, order_by=""),
+    Table(name="Klass", model=Klass, order_by=""),
     # Table(name="CorrectAnswerList", model=CorrectAnswerList, order_by=""),
 ]
 
