@@ -107,31 +107,31 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # PostegreSQL database (Local)
 
-if DEV_ENVIROMENT:
+# if DEV_ENVIROMENT:
     # DATABASES = {
     #     'default': {
     #         'ENGINE': 'django.db.backends.sqlite3',
     #         'NAME': BASE_DIR / 'db.sqlite3',
     #     }
     # }
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'teachers_db', 
-            'USER': 'zishan',
-            'PASSWORD': 'zishan',
-            'HOST': '127.0.0.1', 
-            'PORT': '5432',
-        }
-    }
-else:
-    # Render PostgreSQL databse (Live)
-    import dj_database_url
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#             'NAME': 'teachers_db', 
+#             'USER': 'zishan',
+#             'PASSWORD': 'zishan',
+#             'HOST': '127.0.0.1', 
+#             'PORT': '5432',
+#         }
+#     }
+# else:
+# Render PostgreSQL databse (Live)
+import dj_database_url
 
-    DATABASES = {
-        # 'default': dj_database_url.parse(env('DATABASE_URL')),
-        'default': dj_database_url.parse(os.getenv('DATABASE_URL')),
-    }
+DATABASES = {
+    # 'default': dj_database_url.parse(env('DATABASE_URL')),
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL')),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
