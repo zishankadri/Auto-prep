@@ -103,10 +103,10 @@ class Question(models.Model):
 
     def save(self, *args, **kwargs):
         # Check if the question is duplicate and set is_public accordingly.
-        existing_question = Question.objects.filter(question=self.question).first()
+        # existing_question = Question.objects.filter(question=self.question).first()
 
-        if existing_question:
-            self.is_public = False
+        # if existing_question:
+            # self.is_public = False
 
         super().save(*args, **kwargs)
 
