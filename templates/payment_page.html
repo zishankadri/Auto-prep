@@ -43,8 +43,8 @@
                 <span class="text-4xl text-black font-medium">${{ MONTHLY_PRICE }}</span> /mois
             </div>
             <div class="w-full [&_button]:w-full">
-                {% comment %} {{ monthly_form.render }} {% endcomment %}
-                <button class="btn-primary" disabled>Commencer</button>
+                {{ monthly_form.render }}
+                {% comment %} <button class="btn-primary" disabled>Commencer</button> {% endcomment %}
             </div>
         </div>
 
@@ -61,11 +61,11 @@
                 <span class="text-4xl text-black font-medium">${{ YEARLY_PRICE }}</span> /an
             </div>
             <div class="w-full [&_button]:w-full">
-                {% comment %} {{ yearly_form.render }} {% endcomment %}
-                <button class="btn-primary" disabled>Commencer</button>
+                {{ yearly_form.render }}
+                {% comment %} <button class="btn-primary" disabled>Commencer</button> {% endcomment %}
             </div>
         </div>
-        <div class="p-10 flex flex-col gap-4 border rounded-lg border-emerald-500">
+        {% comment %} <div class="p-10 flex flex-col gap-4 border rounded-lg border-emerald-500">
             <h1 class="text-2xl text-emerald-500 ">
                 Gratuite
             </h1>
@@ -80,7 +80,7 @@
             </div>
 
             <a href="/payment_successful/" class="btn-primary text-center">Commencer</a>
-        </div>
+        </div> {% endcomment %}
 
     </div>
 
