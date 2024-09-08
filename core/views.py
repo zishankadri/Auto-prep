@@ -91,8 +91,8 @@ def payment_page(request):
 
 
 def payment_successful_view(request):
-    request.user.is_paid_member = True
-    request.user.save()
+    # request.user.is_paid_member = True
+    # request.user.save()
     return render(request, "payment-successfull.html")
 
 
@@ -104,8 +104,6 @@ def payment_failed_view(request):
 @user_passes_test(has_access, login_url="/payment/")
 def classes(request, klass_id=None):
     klass = None
-    request.user.is_paid_member = False
-    request.user.save()
 
     if request.method == "POST":
         print("hello")
