@@ -53,7 +53,8 @@ def show_me_the_money(sender, **kwargs):
 
     # Successful payment for recurring subscription
     elif ipn_obj.txn_type == "subscr_payment":
-        user = UserAccount.objects.get(subscriber_id=ipn_obj.subscr_id)
+        # user = UserAccount.objects.get(subscriber_id=ipn_obj.subscr_id)
+        user = UserAccount.objects.get(id=ipn_obj.custome)
 
         if not ipn_obj.payment_status == ST_PP_COMPLETED:
             return 
