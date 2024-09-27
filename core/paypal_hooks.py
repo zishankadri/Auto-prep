@@ -24,13 +24,12 @@ def show_me_the_money(sender, **kwargs):
     # user.save()
     user = UserAccount.objects.get(id=ipn_obj.custom)
     user.subscriber_id = ipn_obj.subscr_id
-    user.subscription_status = "it hit"
+    
+    user.subscription_status = ipn_obj.txn_type + " , " + str(ipn_obj.txn_type == "subscr_payment")
     user.save()
 
     if ipn_obj.receiver_email != settings.PAYPAL_RECEIVER_EMAIL: return  # Invalid payment
     if ipn_obj.mc_currency != 'USD':
-        user = UserAccount.objects.get(id=ipn_obj.custom)
-        user.subscriber_id = ipn_obj.subscr_id
         user.subscription_status = "Currency mismatch"
         user.save()
 
@@ -64,9 +63,9 @@ def show_me_the_money(sender, **kwargs):
     # Successful payment for recurring subscription
     elif ipn_obj.txn_type == "subscr_payment":
         user.subscription_status = "subscr_payment"
+        user.save()
 
         # user = UserAccount.objects.get(subscriber_id=ipn_obj.subscr_id)
-        user = UserAccount.objects.get(id=ipn_obj.custome)
 
         if not ipn_obj.payment_status == ST_PP_COMPLETED:
             return 
