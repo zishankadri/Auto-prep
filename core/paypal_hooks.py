@@ -22,12 +22,17 @@ def show_me_the_money(sender, **kwargs):
 
     # user.subscription_status = "outside"
     # user.save()
+    user = UserAccount.objects.get(id=ipn_obj.custom)
+    user.subscriber_id = ipn_obj.subscr_id
+    user.subscription_status = "it hit"
+    user.save()
 
     if ipn_obj.receiver_email != settings.PAYPAL_RECEIVER_EMAIL: return  # Invalid payment
     if ipn_obj.mc_currency != 'USD':
         user = UserAccount.objects.get(id=ipn_obj.custom)
         user.subscriber_id = ipn_obj.subscr_id
         user.subscription_status = "Currency mismatch"
+        user.save()
 
         return  # Invalid payment
 
