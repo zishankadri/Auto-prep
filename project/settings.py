@@ -224,7 +224,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # This is the app passwor
 
 # PayPal Integration
 PAYPAL_RECEIVER_EMAIL = os.getenv('PAYPAL_RECEIVER_EMAIL')
-# PAYPAL_TEST = True
+PAYPAL_TEST = False
 
 MONTHLY_PRICE = 10
 YEARLY_PRICE = 100

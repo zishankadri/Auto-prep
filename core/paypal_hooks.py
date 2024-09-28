@@ -25,6 +25,9 @@ def show_me_the_money(sender, **kwargs):
     user = UserAccount.objects.get(id=ipn_obj.custom)
     user.subscriber_id = ipn_obj.subscr_id
     
+    user.subscription_status = "yeah hit"
+    user.save()
+
     user.subscription_status = ipn_obj.txn_type + " , " + str(ipn_obj.txn_type == "subscr_payment")
     user.save()
 
