@@ -127,7 +127,7 @@
         </div>
 
         <!--    Section D    -->
-        <div class="home-container items-center gap-16">
+        {% comment %} <div class="home-container items-center gap-16">
 
             <div class="flex flex-col gap-8 items-start">
                 <h1 class="text-4xl"> 
@@ -149,7 +149,7 @@
 
             <img src="{% static "images/cours.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl">
         </div>
-    
+     {% endcomment %}
 
         <!--    Section E    -->
         <div class="flex flex-col gap-16 py-8 sm:py-16 items-center w-full ">
@@ -180,8 +180,8 @@
     </div>
 
     <footer class="max-w-[1100px] m-auto flex justify-between items-center px-4 py-4 border-t border-slate-700 text-slate-400">
-        <p class="text-slate-400 text-center"> Copyright {% now "Y" %} © Autoprep LLC. <br> All Right Reserved.</p>
-        <a href="/cgv/">CGV</a>
+        <p class="text-slate-400 text-center"> Copyright {% now "Y" %} © Zishan Kadri <br> All Right Reserved.</p>
+        {% comment %} <a href="/cgv/">Terms</a> {% endcomment %}
     </footer>
 </body>
 

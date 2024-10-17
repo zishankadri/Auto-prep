@@ -5,12 +5,12 @@
     <form method="post" id="start-mcq-form" class="flex flex-col gap-4">
             {% csrf_token %}
         <div>
-            <label for="test-name" class="block text-sm font-medium leading-6 text-slate-700">Nom du test</label>
+            <label for="test-name" class="block text-sm font-medium leading-6 text-slate-700">Test name</label>
             <input type="text" name="test-name" id="test-name" class="regular-input" required>
         </div>
 
         <div>
-            <label for="no-of-questions" class="block text-sm font-medium leading-6 text-slate-700">Nombre de questions</label>
+            <label for="no-of-questions" class="block text-sm font-medium leading-6 text-slate-700">Number of questions</label>
             <select name="no-of-questions" id="no-of-questions" class="regular-input" required>
                 {% comment %} <option value="2">2</option> {% endcomment %}
                 <option value="5">5</option>
@@ -21,9 +21,9 @@
         </div>
         <!-- Select Class -->
         <div>
-            <label for="select-class" class="block text-sm font-medium leading-6 text-slate-700">Classe</label>
+            <label for="select-class" class="block text-sm font-medium leading-6 text-slate-700">Class</label>
             <select name="select-class" id="select-class" class="regular-input" onchange="updateChapters()" required>
-                <option value=""> Sélectionnez une classe </option>
+                <option value=""> Select a class </option>
                 {% for k in klasses %}
                     <option value="{{k.id}}" class="text-slate-700" {% if k == klass %}selected{% endif %}>
                         {{k.name}}
@@ -43,10 +43,10 @@
         </div>
 
         <div>
-            <label for="no-of-questions" class="block text-sm font-medium leading-6 text-slate-700">Feuilles de questions</label>
+            <label for="no-of-questions" class="block text-sm font-medium leading-6 text-slate-700">Question Sheets</label>
             <select name="select-sheet-type" id="select-sheet-type" class="regular-input" required>
-                <option value="SAME_TEST"> Tous les étudiants ont le même test </option>
-                <option value="UNIQUE_TEST"> Chaque élève a un test unique </option>
+                <option value="SAME_TEST"> All students have the same test.</option>
+                <option value="UNIQUE_TEST"> Each student has one test.</option>
             </select>
         </div>
         <div>
@@ -57,7 +57,7 @@
             </select>
         </div>
 
-        <button class="btn-primary" id="submit-button" disabled>Commencer</button>
+        <button class="btn-primary" id="submit-button" disabled>Continue</button>
         {% comment %} <button class="btn-primary" id="submit-button" onclick="start()" disabled>Commencer</button> {% endcomment %}
     </form>
 

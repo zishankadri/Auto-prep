@@ -15,22 +15,22 @@
   <div class="main relative p-8 flex flex-col justify-center items-center h-full text-slate-400">
     <div class="flex flex-col mb-4 gap-4">
       <h1 class="text-xl text-slate-400">
-        Terminé le {{test.date_completed}}
+        Finished on {{test.date_completed}}
       </h1>
 
       <div class="flex gap-4">
         <div class="inline-block py-2 w-64 px-8 rounded-lg border">
-          <span class="">La note moyenne</span>
+          <span class="">Average score</span>
           <h1 class="text-3xl text-center my-4 text-blue-500">{{test.average_grades|floatformat:2}}</h1>
         </div>
         <div class="inline-block py-2 w-64 px-8 rounded-lg border">
-          <span class="">Taux d'achèvement</span>
+          <span class="">Completion rate</span>
           <h1 class="text-3xl text-center my-4 text-blue-500">{{test.completion_rate|floatformat:2}}%</h1>
         </div>
       </div>
       <a class="btn-secondary !inline-block self-end !border-red-400 !text-red-400 hover:bg-red-400 hover:!text-white"
       href="{% url "delete_test" test_id=test.id %}">
-      Supprimer l'essai
+      Delete test
       </a>
     </div>
   </div>
