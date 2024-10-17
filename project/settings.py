@@ -107,31 +107,25 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # PostegreSQL database (Local)
 
-# if DEV_ENVIROMENT:
-    # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.sqlite3',
-    #         'NAME': BASE_DIR / 'db.sqlite3',
-    #     }
-    # }
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'teachers_db', 
-#             'USER': 'zishan',
-#             'PASSWORD': 'zishan',
-#             'HOST': '127.0.0.1', 
-#             'PORT': '5432',
-#         }
-#     }
-# else:
-# Render PostgreSQL databse (Live)
-import dj_database_url
+if DEV_ENVIROMENT:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'teachers_db', 
+            'USER': 'zishan',
+            'PASSWORD': 'zishan',
+            'HOST': '127.0.0.1', 
+            'PORT': '5432',
+        }
+    }
+else:
+    # Render PostgreSQL databse (Live)
+    import dj_database_url
 
-DATABASES = {
-    # 'default': dj_database_url.parse(env('DATABASE_URL')),
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL')),
-}
+    DATABASES = {
+        # 'default': dj_database_url.parse(env('DATABASE_URL')),
+        'default': dj_database_url.parse(os.getenv('DATABASE_URL')),
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -224,7 +218,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # This is the app passwor
 
 # PayPal Integration
 PAYPAL_RECEIVER_EMAIL = os.getenv('PAYPAL_RECEIVER_EMAIL')
-PAYPAL_TEST = False
+PAYPAL_TEST = True
 
 MONTHLY_PRICE = 10
 YEARLY_PRICE = 100
@@ -232,7 +226,7 @@ YEARLY_PRICE = 100
 DEFAUL_DOMAIN = "teachers-app.onrender.com"
 SITE_NAME = "site-name"
 
-# Cloudingary - Djanog integration
+# Cloudingary - Django integration
 cloudinary.config(
     cloud_name = "dfuupz7rh",
     api_key = "747535543642996",

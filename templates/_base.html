@@ -37,9 +37,9 @@
             {% comment %} <li><a href="/" class="nav-link"> Home </a></li> {% endcomment %}
             <li><a href="/classes/" class="nav-link"> Classes </a></li>
             <li><a href="/courses/" class="nav-link"> Cours </a></li>
-            <li><a href="/mcqs/" class="nav-link"> QCM </a></li>
+            <li><a href="/mcqs/" class="nav-link"> MCQ </a></li>
             {% if request.user.is_superuser %}
-            <li> <a href="/admin/" class="nav-link" target="_blank"> Admin </a></li>
+            {% comment %} <li> <a href="/admin/" class="nav-link" target="_blank"> Admin </a></li> {% endcomment %}
             {% endif %}
             
             <li><a href="/accounts/logout/" class="nav-link"> Log Out </a></li>

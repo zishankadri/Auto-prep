@@ -10,7 +10,7 @@
 
 <div class="mycontainer group/container bg-gray-50 min-h-[100vh]">
     <!-- <h1 class="fancy-headline relative inline-block text-slate-700 text-2xl font-medium"> MCQs Creation & Correction </h1> -->
-    <h3 class="text-lg text-slate-600 pb-4">Exécution de tests</h3>
+    <h3 class="text-lg text-slate-600 pb-4">Running tests</h3>
     <div class="flex flex-wrap gap-8">
         {% for test in test_list %}
         {% if test.status != "COMPLETED" %}
@@ -19,7 +19,7 @@
                 <span class="text-2xl text-slate-700 font-medium group-hover/card:text-white">{{test.name}}</span>
                 <span class="flex items-center px-2 py-1 text-sm border rounded-md text-slate-400 font-medium group-hover/card:text-white">{{test.klass.name}}</span>
             </div>
-            <span href="" class=" group-hover/card:text-white text-slate-700"> télécharger des feuilles <i class="ml-0 text-brand group-hover/card:ml-2 group-hover/card:text-white fa-solid fa-arrow-right duration-500"></i></span>
+            <span href="" class=" group-hover/card:text-white text-slate-700"> Download sheets <i class="ml-0 text-brand group-hover/card:ml-2 group-hover/card:text-white fa-solid fa-arrow-right duration-500"></i></span>
         </a>
         {% endif %}
         {% endfor %}
@@ -30,7 +30,7 @@
     </div>
 
     {% if test_list %}
-    <h3 class="text-lg text-slate-600 pt-8 pb-4">Tests terminés</h3>
+    <h3 class="text-lg text-slate-600 pt-8 pb-4">Tests completed</h3>
     {% endif %}
     <div class="flex flex-wrap gap-8">
         {% for test in test_list %}
@@ -40,7 +40,7 @@
                 <span class="text-2xl text-slate-700 font-medium group-hover/card:text-white">{{test.name}}</span>
                 <span class="flex items-center px-2 py-1 text-sm border rounded-md text-slate-400 font-medium group-hover/card:text-white">{{test.klass.name}}</span>
             </div>
-            <span href="" class=" group-hover/card:text-white text-slate-700"> Consultez les résultats <i class="ml-0 text-brand group-hover/card:ml-2 group-hover/card:text-white fa-solid fa-arrow-right duration-500"></i></span>
+            <span href="" class=" group-hover/card:text-white text-slate-700"> Check out the results <i class="ml-0 text-brand group-hover/card:ml-2 group-hover/card:text-white fa-solid fa-arrow-right duration-500"></i></span>
         </a>
         {% endif %}
         {% endfor %}

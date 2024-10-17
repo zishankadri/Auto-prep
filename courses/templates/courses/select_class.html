@@ -7,7 +7,7 @@
 <div class="flex flex-col gap-8 items-start py-8 px-8 bg-gray-50 min-h-[100vh]">
     <div class="border-b w-full pb-8">
         <select name="select-class" id="select-class" onchange="updateChapters()" class="border rounded-xl text-slate-700 border-slate-300 p-4 min-w-[25ch] ">
-            <option value=""> Sélectionnez une classe </option>
+            <option value=""> Select a class</option>
             {% for k in klasses %}
             <option value="{{k.id}}" class="text-slate-700" {% if k == klass %}selected{% endif %}>
                 {{k.name}}
@@ -22,7 +22,7 @@
         <div class="chapter group rounded-2xl shadow border hover:outline outline-1 outline-blue-600 bg-white">
             <div class="top-bar flex justify-between items-center px-6 py-4">
                 <span class="">
-                    <p class="font-extralight"> chapitre {{chapter.number}} </p>
+                    <p class="font-extralight"> chapter {{chapter.number}} </p>
                     <span class="text-xl font-medium">
                         {{chapter.name}}
                     </span>

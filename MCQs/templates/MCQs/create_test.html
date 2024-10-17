@@ -32,7 +32,7 @@
             </div>
             
             <div>
-                <label for="correct_ans" class="block text-sm font-medium leading-6 text-slate-700 pb-2"> Bonne réponse </label>                {{form.correct_ans}}
+                <label for="correct_ans" class="block text-sm font-medium leading-6 text-slate-700 pb-2"> Correct Option </label>                {{form.correct_ans}}
             </div>
 
         </div>
@@ -44,6 +44,7 @@
 
     <!-- Recommended Questions -->
     <div id="question-container" class="flex flex-col flex-1 gap-4 items-center max-h-[100vh] overflow-y-scroll">
+        <h1 class="text-2xl text-start w-full fancy-text">AI Generated Questions</h1>
         {% for question in recommended_questions %}
         <div id="{{question.id}}" class="recommended-question flex flex-col w-full border p-4 gap-2 rounded-xl bg-white">
             <div class="text-lg">
@@ -85,7 +86,7 @@
                     </button>
                 </div>
                 <button class="btn-add btn-primary">
-                    Insérer
+                    Insert
                 </button>
 
             </div>

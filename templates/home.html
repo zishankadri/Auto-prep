@@ -38,7 +38,7 @@
 
                     {% if  request.user.is_anonymous %}
                     {% comment %} <li><a href="/" class="nav-link"> Home </a></li> {% endcomment %}
-                    <li><a href="/accounts/login/" class="btn-secondary !text-slate-200 !border-slate-200 hover:bg-blue-500/40"> Se connecter </a></li>
+                    <li><a href="/accounts/login/" class="btn-secondary !text-slate-200 !border-slate-200 hover:bg-blue-500/40"> Log In </a></li>
                     {% comment %} <li><a href="/accounts/register/" class="btn-primary"> Sign Up </a></li> {% endcomment %}
 
                     {% elif  request.user.is_authenticated %}
@@ -70,19 +70,19 @@
                     </h1>  {% endcomment %}
                     <h1 class="text-5xl text-slate-200 "> 
                         
-                        Révolutionner <br> 
+                        Revolutionize <br> 
                         <span class="fancy-text ">
-                            Éducation
+                            Education
                         </span>     
-                        avec l'IA
+                        with AI
                     </h1> 
 
                     <p class="text-slate-300">
-                        Évaluations améliorées par l’IA et accès complet au matériel de cours pour une expérience d’apprentissage améliorée.
+                        AI-enhanced assessments and full access to course materials for an enhanced learning experience.
                     </p>
                     <!-- <a href="/accounts/register/" class="btn-home border-t !border-blue-400">Try For Free</a> -->
                     <div class="flex gap-8">
-                        <a href="/accounts/register/" class="btn-home">Registre &nbsp; <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i></a>
+                        <a href="/accounts/register/" class="btn-home">Register &nbsp; <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i></a>
                         {% comment %} <img src="{% static "./images/arrow.png" %}" alt="" class="relative top-4 h-8"> {% endcomment %}
                         <img src="{% static "./images/arrow1.png" %}" alt="" class="relative top-4 h-6">
                     </div>
@@ -93,20 +93,20 @@
         </div>
 
         <h1 class="text-4xl text-center pt-24 "> 
-            Là
+            There
             <span class="fancy-text"> 
-                puissance de l'IA
+                power of AI
             </span>
-            Dans le virtuel <br> Classe
+            In the virtual <br> Classroom
         </h1>
         <!--    Section B    -->
         <div class="home-container items-center gap-16">
 
             <div class="flex flex-col gap-8 items-start">
                 <h1 class="text-4xl  "> 
-                    Création automatique de tests à choix multiples uniques
+                    Automatic creation of unique multiple choice tests
                 </h1>
-                <p class="text-slate-400">Cette fonctionnalité génère automatiquement des tests à choix multiples uniques pour chaque étudiant, éliminant ainsi le besoin de notation manuelle.</p>
+                <p class="text-slate-400">This feature automatically generates unique multiple choice tests for each student, eliminating the need for manual marking.</p>
             </div>
 
             <img src="{% static "images/section-b.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl  border-slate-800">
@@ -119,9 +119,9 @@
             
             <div class="flex flex-col gap-8 items-start">
                 <h1 class="text-4xl "> 
-                    Correction automatique du QCM par Intelligence Artificielle.
+                    Automatic correction of the MCQ by Artificial Intelligence.
                 </h1>
-                <p class="text-slate-400">Le site gère la correction de chaque test à choix multiples.</p>
+                <p class="text-slate-400">The site manages the correction of each multiple choice test.</p>
             </div>
 
         </div>
@@ -131,7 +131,7 @@
 
             <div class="flex flex-col gap-8 items-start">
                 <h1 class="text-4xl"> 
-                    Accès à chaque cours du programme
+                    Access to each course in the program
                 </h1>
                 <p class="text-slate-400">Trois types de cours sont téléchargeables :</p>
                 <ul class="flex flex-col gap-4">
@@ -153,7 +153,7 @@
 
         <!--    Section E    -->
         <div class="flex flex-col gap-16 py-8 sm:py-16 items-center w-full ">
-            <h1 class="text-4xl"> Questions fréquemment posées </h1>
+            <h1 class="text-4xl"> Frequently Asked Questions </h1>
 
             <div class="w-full flex flex-col justify-center lg:max-w-[80ch] border-t border-slate-200/10">
                 {% for faq in faq_list %}
