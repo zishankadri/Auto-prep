@@ -2,7 +2,7 @@ from django import template
 import random
 from core.models import Student
 from MCQs.models import CorrectAnswerList
-from courses.models import Chapter, SubChapter
+from courses.models import Chapter
 
 register = template.Library()
 
@@ -62,6 +62,3 @@ def get_average_grade(student_list) -> float:
     except:
         return 0
     
-@register.filter(name='get_sub_chapters')
-def get_sub_chapters(chapter):
-    return SubChapter.objects.filter(chapter=chapter).order_by("number")

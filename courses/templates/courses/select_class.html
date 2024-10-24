@@ -19,7 +19,38 @@
     <!-- Chapters -->
     <div class="flex flex-col gap-6 w-full sm:w-[40%] min-w-[40%]">
         {% for chapter in chapters %}
-        <div class="chapter group rounded-2xl shadow border hover:outline outline-1 outline-blue-600 bg-white">
+
+
+        <div class="flex w-full bg-white justify-between overflow-hidden border rounded-xl mb-4">
+            <span class="p-4">
+                {{chapter.name}}
+            </span>
+            <form method="post" class="flex hover:bg-blue-100 items-center hover:text-blue-600">
+                {% csrf_token %}
+                <input type="text" name="chapter_id" value="{{chapter.id}}" class="hidden">
+                <button name="delete_chapter" class="w-full h-full px-6" >
+                    <i class="fa-solid fa-x"></i>
+                </button>
+            </form>
+            <!-- <a download href="{{ chapter.id }}" class="flex hover:bg-blue-100 px-6 items-center hover:text-blue-600"> </a> -->
+        </div>
+        {% endfor %}
+        {% if chapters %}
+        <form method="post" enctype="multipart/form-data" class="bg-white p-4 gap-4 flex flex-col w-full justify-between overflow-hidden border rounded-xl mb-4">
+            {% csrf_token %}
+
+            <input type="text" name="name" placeholder="Chapter Name" class="regular-input">
+            <input type="number" name="number" placeholder="Chapter Number" class="regular-input">
+            <input type="text" name="level_id" value="{{klass.level.id}}" class="regular-input hidden">
+            <input type="file" name="file" class="regular-input !p-0">
+            <button name="add_chapter" class="btn-primary">Add</button>
+        </form>
+        {% endif %}
+
+    </div>
+
+</div>
+        {% comment %} <div class="chapter group rounded-2xl shadow border hover:outline outline-1 outline-blue-600 bg-white">
             <div class="top-bar flex justify-between items-center px-6 py-4">
                 <span class="">
                     <p class="font-extralight"> chapter {{chapter.number}} </p>
@@ -27,30 +58,24 @@
                         {{chapter.name}}
                     </span>
                 </span>
+            <a download href="{{ sub_chapter.file_url }}" class="flex hover:bg-blue-100 px-6 items-center hover:text-blue-600">
+
                 <i class="arrow fa-solid fa-chevron-down"></i>
             </div>
-            <div class="content hidden px-6 py-4">
+        </div> {% endcomment %}
+            <!-- <div class="content hidden px-6 py-4">
 
-                {% for sub_chapter in chapter|get_sub_chapters %}
                 <div class="flex w-full justify-between overflow-hidden border rounded-xl mb-4">
                     <span class="p-4">
                         {{sub_chapter.name}}
                     </span>
                     {% comment %} <a download href="{{ sub_chapter.file_url }}" class="flex hover:bg-blue-100 px-6 items-center hover:text-blue-600"> {% endcomment %}
-                    <a download href="{% url 'download_file' sub_chapter_id=sub_chapter.id %}" class="flex hover:bg-blue-100 px-6 items-center hover:text-blue-600">
+                    <a download href="{{ sub_chapter.id }}" class="flex hover:bg-blue-100 px-6 items-center hover:text-blue-600">
                         <i class="fa-solid fa-download"></i>
                     </a>
                 </div>
-                {% endfor %}
 
-            </div>
-
-        </div>
-        {% endfor %}
-    </div>
-
-</div>
-
+            </div> -->
 <script>
 function updateChapters() {
     klassId = document.getElementById("select-class").value;

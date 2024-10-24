@@ -4,11 +4,65 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 from .models import Chapter
-from core.models import Klass, Subject
-from courses.models import SubChapter
+from core.models import Klass, Subject, Level
+# from courses.models import SubChapter
+from MCQs.AIQuestionGenerator import get_question_from_pdf
+from MCQs.models import Question
+from django.conf import settings
+
+
+
+def extract_option(s):
+    # Clean the string by removing spaces and periods
+    cleaned_s = s.replace(' ', '').replace('.', '')
+
+    # Check if A, B, C, or D is in the cleaned string
+    for option in ['A', 'B', 'C', 'D']:
+        if option in cleaned_s.upper():
+            return option
+    
+    # Return None if no valid option is found
+    return None
 
 @login_required
 def courses(request, klass_id=None):
+    if request.method == "POST":
+        if "delete_chapter" in request.POST:
+            chapter_id = request.POST['chapter_id']
+            chapter = Chapter.objects.get(id=chapter_id)
+            chapter.delete()
+
+        elif "add_chapter" in request.POST:
+            name = request.POST['name']
+            level_id = request.POST['level_id']
+            number = request.POST['number']
+            file = request.FILES['file']
+
+            level = Level.objects.get(id=level_id)
+
+
+            chapter = Chapter(
+                name=name,
+                number=number,
+                level=level,
+                file=file,
+                subject=request.user.subject
+            )
+            chapter.save()
+
+            print("chapter.file.url: ", chapter.file.path)
+            question = get_question_from_pdf(os.path.join(str(settings.BASE_DIR), str(chapter.file.path)))
+            generated_question = Question(
+                question=question[0],
+                ans_a=question[1],
+                ans_b=question[2],
+                ans_c=question[3],
+                ans_d=question[4],
+                correct_ans=extract_option(question[5]),
+                chapter=chapter,
+            )
+            generated_question.save()
+
     klasses = Klass.objects.filter(user=request.user)
     
     context = {
@@ -65,26 +119,26 @@ storage = firebase.storage()
 # user= auth.sign_in_with_email_and_password('zishankadri9@gmail.com', "Firebase@1234")
 
 
-def download_file(request, sub_chapter_id):
-    sub_chapter = SubChapter.objects.get(id=sub_chapter_id)
-    download_url = sub_chapter.file_url
+# def download_file(request, sub_chapter_id):
+    # sub_chapter = SubChapter.objects.get(id=sub_chapter_id)
+    # download_url = sub_chapter.file_url
 
-    file_name = os.path.basename(uri_to_iri(urlparse(download_url).path))
-    file_name = file_name.replace("sub_chapters%2F", "", 1)
+    # file_name = os.path.basename(uri_to_iri(urlparse(download_url).path))
+    # file_name = file_name.replace("sub_chapters%2F", "", 1)
 
-    # Serve the file with appropriate headers
-    response = HttpResponse(content_type='application/octet-stream')
-    response['Content-Disposition'] = f'attachment; filename={file_name}'
+    # # Serve the file with appropriate headers
+    # response = HttpResponse(content_type='application/octet-stream')
+    # response['Content-Disposition'] = f'attachment; filename={file_name}'
 
-    # Fetch the file content directly from the storage URL
-    download_response = requests.get(download_url)
-    if download_response.status_code != 200:
-        # Something went wrong, return an error response
-        return 
+    # # Fetch the file content directly from the storage URL
+    # download_response = requests.get(download_url)
+    # if download_response.status_code != 200:
+    #     # Something went wrong, return an error response
+    #     return 
 
-    response.content = download_response.content
+    # response.content = download_response.content
 
-    return response
+    # return response
 
 
 @login_required

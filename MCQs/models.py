@@ -82,7 +82,7 @@ class Question(models.Model):
         ("D", "D"),
     )
 
-    test = models.ForeignKey("MCQs.Test", on_delete=models.CASCADE)
+    test = models.ForeignKey("MCQs.Test", on_delete=models.CASCADE, null=True, blank=True)
     chapter = models.ForeignKey("courses.Chapter", on_delete=models.CASCADE, null=True)
 
     question = models.TextField()
@@ -96,7 +96,7 @@ class Question(models.Model):
     correct_ans = models.CharField(choices=CORRECT_ANS_CHOICES ,max_length=1)
     likes = models.ManyToManyField("accounts.UserAccount", related_name="liked_questions", blank=True)
     dislikes = models.ManyToManyField("accounts.UserAccount", related_name="disliked_questions", blank=True)
-    is_public = models.BooleanField()
+    is_public = models.BooleanField(default=True)
     
     def __str__(self) -> str:
         return self.question

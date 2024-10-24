@@ -81,8 +81,8 @@ def create_test(request, klass_id, test_name, no_of_questions, answer_sheet_type
     # Fetch questions of level and subject to recommend & like/dislike
     if chapter:
         recommended_questions = Question.objects.filter(
-            test__klass__user__subject=request.user.subject,
-            test__klass__level=klass.level,
+            # test__klass__user__subject=request.user.subject,
+            # test__klass__level=klass.level,
             chapter=chapter,
             is_public=True
         )

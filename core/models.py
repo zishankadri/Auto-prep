@@ -24,7 +24,7 @@ class Klass(models.Model):
     def add_grade_column(self):
         students_list = Student.objects.filter(klass=self)
         for student in students_list:
-            student.grades.append(None)
+            student.grades.append(0)
             student.save()
             print(student.grades)
 

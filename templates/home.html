@@ -87,7 +87,7 @@
                         <img src="{% static "./images/arrow1.png" %}" alt="" class="relative top-4 h-6">
                     </div>
                 </div>
-                <img src="{% static "images/home.svg" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl">
+                <img src="{% static "images/home.svg" %}" alt="" class="hidden animate-jiggle lg:!flex w-2/5 rounded-xl">
 
             </div>
         </div>
@@ -115,7 +115,11 @@
 
         <!--    Section C    -->
         <div class="home-container items-center gap-16">
-            <img src="{% static "images/section-c.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl  border-slate-800">
+            <div class="relative w-2/5">
+                <span class="animate-up-down absolute top-0 left-[-20px] w-[calc(100%+40px)] bg-green-500 h-[2px]"></span>
+                <span class="absolute top-0 left-0 w-full h-full bg-green-500/15 rounded-2xl"></span>
+                <img src="{% static "images/section-c.png" %}" alt="" class=" hidden lg:!flex w-full rounded-xl border-slate-800">
+            </div>
             
             <div class="flex flex-col gap-8 items-start">
                 <h1 class="text-4xl "> 
@@ -126,63 +130,53 @@
 
         </div>
 
-        <!--    Section D    -->
-        {% comment %} <div class="home-container items-center gap-16">
-
-            <div class="flex flex-col gap-8 items-start">
-                <h1 class="text-4xl"> 
-                    Access to each course in the program
-                </h1>
-                <p class="text-slate-400">Trois types de cours sont téléchargeables :</p>
-                <ul class="flex flex-col gap-4">
-                    <li class="flex items-center gap-4 text-late-200">
-                        <span class="flex justify-center text-xl items-center p-4 w-12 h-12 bg-blue-200 text-blue-600 rounded-full">1</span>
-                        Accompagnement pédagogique de l'enseignant.
-                    </li>
-                    <li class="flex items-center gap-4 text-late-200">
-                        <span class="flex justify-center text-xl items-center p-4 w-12 h-12 bg-blue-200 text-blue-600 rounded-full">2</span>
-                        Support pédagogique à distribuer aux étudiants.
-                    </li>
-                    
-                </ul>
-            </div>
-
-            <img src="{% static "images/cours.png" %}" alt="" class="hidden lg:!flex w-2/5 rounded-xl">
-        </div>
-     {% endcomment %}
-
         <!--    Section E    -->
         <div class="flex flex-col gap-16 py-8 sm:py-16 items-center w-full ">
             <h1 class="text-4xl"> Frequently Asked Questions </h1>
 
             <div class="w-full flex flex-col justify-center lg:max-w-[80ch] border-t border-slate-200/10">
-                {% for faq in faq_list %}
+                <!-- Q1 -->
                 <div 
                 class="question group border-b border-slate-200/10 p-8"
                 >
                     <div class="top-bar flex justify-between items-center">
                         <span class="text-xl font-medium group-hover:text-blue-600">
-                            {{faq.question}}
+                            How does it work?
                         </span>
                         <i class="arrow fa-solid fa-chevron-down"></i>
                     </div>
 
                     <p class="answer hidden text-slate-400">
-                        {{faq.answer}}
+                        Go to Auto-Prep to create and print the MCQ sheets. Once you have taken the exam, scan the answer sheets and upload them to Auto-Prep. Correction and matching of copies to participants is automatic! You will then have the notes of your participants in a few moments.
                     </p>
-
                 </div>
-                {% endfor %}
+                <div 
+                class="question group border-b border-slate-200/10 p-8"
+                >
+                    <div class="top-bar flex justify-between items-center">
+                        <span class="text-xl font-medium group-hover:text-blue-600">
+                            Need equipment?
+                        </span>
+                        <i class="arrow fa-solid fa-chevron-down"></i>
+                    </div>
+
+                    <p class="answer hidden text-slate-400">
+                        You simply need: <br>
+                            1. a computer with a web browser connected to the Internet<br>
+                            2. a printer-scanner or your smartphone
+
+                    </p>
+                </div>
             </div> <!-- FAQ container  -->
         </div> <!-- FAQs Section -->
 
 
     </div>
 
-    <footer class="max-w-[1100px] m-auto flex justify-between items-center px-4 py-4 border-t border-slate-700 text-slate-400">
+    <!-- <footer class="max-w-[1100px] m-auto flex justify-between items-center px-4 py-4 border-t border-slate-700 text-slate-400">
         <p class="text-slate-400 text-center"> Copyright {% now "Y" %} © Zishan Kadri <br> All Right Reserved.</p>
         {% comment %} <a href="/cgv/">Terms</a> {% endcomment %}
-    </footer>
+    </footer> -->
 </body>
 
 

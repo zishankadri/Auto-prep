@@ -77,3 +77,38 @@
     /* @apply font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#c688ff] to-[#9be8ff] */
     @apply font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#b96fff] to-[#62daff]
 }
+
+
+@keyframes moveLine {
+    0% {
+      top: 0px;
+    }
+    50% {
+      top: 100%;
+    }
+    100% {
+      top: 0%;
+    }
+  }
+
+.animate-up-down {
+    animation: moveLine 2s infinite;
+}
+  
+@keyframes jiggle {
+    0% {
+      top: 0px;
+      transform: translateY(-10%);
+    }
+    50% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(10%);
+    }
+  }
+
+.animate-jiggle {
+    animation: jiggle 2s infinite;
+}
+  
